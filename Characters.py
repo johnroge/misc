@@ -1,61 +1,66 @@
 import random
-import time
 
 
 class Creature:
-    def __init__(self, name, level, exp, weapon, health):
+    def __init__(self, name, level, exp, weapon, health, defense):
         self.name = name
         self.level = level
         self.exp = exp
         self.weapon = weapon
         self.health = health
+        self.defense = defense
 
     def __repr__(self):
         return "A level {} {}".format(
             self.level, self.name
         )
 
+    def get_defensive_roll(self):
+        raise NotImplemented
+
 
 class Wizard(Creature):
-    def __init__(self, name, level, exp, weapon, health, magic):
-        super().__init__(name, level, exp, weapon, health)
+    def __init__(self, name, level, exp, weapon, health, defense, magic):
+        super().__init__(name, level, exp, weapon, health, defense)
         self.magic = magic
 
-    def attack(self, creature):
-        print('Our hero attacks the {}!'.format(creature.name))
+    def get_defensive_roll(self):
+        def_roll = random.randint(1, 6) * self.level + self.defense
+        return def_roll
 
-        my_roll = random.randint(1, 6) * self.level + self.exp + self.magic
-        creature_roll = creature.get_defensive_roll()
-
-        print('You roll a......{}'.format(my_roll))
-        print('{} rolls a........{}'.format(creature.name, creature_roll))
-
-        if my_roll >= creature_roll:
-            print('The {} has been slayed by our hero.'.format(creature.name))
-            return True
-        else:
-            print('\nOur hero has fallen...')
-            time.sleep(3)
-            print('\nOr has he?\n')
-            return False
+    def attack(self):
+        attack_roll = random.randint(1, 6) * self.level + self.exp + self.magic
+        return attack_roll
 
 
 class SmallAnimal(Creature):
     def get_defensive_roll(self):
-        base_roll = random.randint(1, 6) * self.level + self.weapon
-        return base_roll / 2
+        def_roll = random.randint(1, 6) * self.level + self.defense
+        return def_roll / 2
+
+    def attack(self):
+        attack_roll = random.randint(1, 3) * self.level + self.weapon
+        return attack_roll
 
 
 class LargeAnimal(Creature):
     def get_defensive_roll(self):
-        base_roll = random.randint(1, 6) * self.level + self.weapon
-        return base_roll + random.randint(2, 8)
+        def_roll = random.randint(1, 6) * self.level + self.defense
+        return def_roll
+
+    def attack(self):
+        attack_roll = random.randint(1, 6) * self.level + self.weapon
+        return attack_roll
 
 
 class MedNPC(Creature):
     def get_defensive_roll(self):
-        base_roll = random.randint(1, 6) * self.level + self.weapon
-        return base_roll + random.randint(3, 20)
+        def_roll = random.randint(1, 6) * self.level + self.defense
+        return def_roll
+
+    def attack(self):
+        attack_roll = random.randint(1, 6) * self.level + self.weapon
+        return attack_roll
 
 
 class Dragon(Creature):
@@ -65,7 +70,9 @@ class Dragon(Creature):
         self.fire = fire
 
     def get_defensive_roll(self):
-        base_roll = random.randint(1, 6) * self.level + self.weapon
-        fire = 3 if self.fire else 1
-        return base_roll + self.scales * fire
+        def_roll = random.randint(1, 6) * self.level + self.scales
+        return def_roll
 
+    def attack(self):
+        attack_roll = random.randint(1, 6) * self.level + self.weapon
+        return attack_roll
