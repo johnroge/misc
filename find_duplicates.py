@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# found pythoncentral.io, needs work
+# copied from pythoncentral.io, needs work
 
 import os, sys
 import hashlib
