@@ -9,6 +9,7 @@ class Creature:
         self.weapon = weapon
         self.health = health
         self.defense = defense
+        self.is_alive = True
 
     def __repr__(self):
         return "A level {} {}".format(
@@ -17,6 +18,12 @@ class Creature:
 
     def get_defensive_roll(self):
         raise NotImplemented
+
+    def take_damage(self, damage_roll):
+        self.health -= damage_roll
+        if self.health < 0:
+            self.health = 0
+            self.is_alive = False
 
 
 class Wizard(Creature):

@@ -60,13 +60,12 @@ def game_loop():
         # TODO: sanitize user input
         cmd = input('Do you [A]ttack [R]un or [L]ook? \n')
         if cmd == 'a':
-            if battle(hero, active_creature):
-                creatures.remove(active_creature)
+            battle(hero, active_creature, creatures)
+            if hero.is_alive:
+                print('Our hero has landed a blow against the {} '.format
+                      (active_creature.name))
             else:
-                time.sleep(3)
-                print('Our hero barely manages to escape to recover...')
-                time.sleep(5)
-                print('The hero is ready again for battle.')
+                print("Crap ..... the creature ate the hero")
         elif cmd == 'r':
             print('Our hero sneaks away to fight another day.')
         elif cmd == 'l':
@@ -85,36 +84,42 @@ def game_loop():
             break
 
 
-def battle(hero, creature):
+def battle(hero, creature, creatures):
     """
     Main battle function, called by hero's attack
     :param hero: current player
     :param creature: active creature
     :return:
     """
-    # get everyone's roll first and store in a variable
-    creature_defense = creature.get_defensive_roll()
-    creature_attack = creature.attack()
-    hero_attack = hero.attack()
-    hero_defense = hero.get_defensive_roll()
+    match(hero, creature)
+    if creature.is_alive:
+        match(creature, hero)
+    else:
+        creatures.remove(creature)
 
-    print('Our hero attacks the {}!'.format(creature.name))
-    print('You roll a: {}'.format(hero_attack))
-    print('{} rolls a: {}'.format(creature.name, creature_defense))
+
+def match(fighter1, fighter2):
+    """
+    Main battle function, called by hero's attack
+    :param hero: current player
+    :param creature: active creature
+    :return:
+    """
+    fighter1_attack = fighter1.attack()
+    fighter2_defense = fighter2.get_defensive_roll()
+
+    print('The {} attacks the {}!'.format(fighter1.name, fighter2.name))
+    print('{} rolls a {}'.format(fighter1.name, fighter1_attack))
+    print('{} rolls a {}'.format(fighter2.name, fighter2_defense))
 
     # call the hit_success function to determine a hit
-    successful_hit = hit_success(hero_attack, creature_defense)
+    successful_hit = hit_success(fighter1_attack, fighter2_defense)
     if successful_hit:
-        print('Hero successfully hits the {} for {} points of damage!'
-              .format(creature.name, hero_attack))
-        # TODO: reduce X health in damage from creature
-        # TODO: if creature health >=0, eliminate creature
-        # TODO:    -> then assign exp points to hero and return to main
-        # TODO: else: creature now attacks hero
-
+        print('{} successfully hits the {} for {} points of damage!'
+              .format(fighter1.name, fighter2.name, fighter1_attack))
+        fighter2.take_damage(fighter1_attack)
     else:
-        print('Hero misses!')
-        # TODO: creature attacks hero
+        print('{} misses!'.format(fighter1.name))
 
 
 def hit_success(attack_roll, defensive_roll):
