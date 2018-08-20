@@ -3,6 +3,8 @@
 putting together a rough framework to find duplicate files
 v0.1 August 2018
 """
+import optparse
+
 
 def main():
     # show user instructions
@@ -15,8 +17,12 @@ def main():
 
 
 def get_user_input():
-    # need syntax for adding parameters
-    pass
+    # sample code for getting input and arguments
+    parser = optparse.OptionParser()
+    parser.add_option('-s', '--subdirectories',
+                      help='include subdirectories of the folder')
+    (options, arguments) = parser.parse_args()
+    return options
 
 
 def check_file_size(file01, file02):
