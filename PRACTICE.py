@@ -1,38 +1,42 @@
 #!/usr/bin/env python3
-import csv
 import os
+import cat_service
 
 
 def main():
     print_header()
-    filename = get_data_file()
-    data = load_file(filename)
-    query_data(data)
+    folder = get_folder()
+    print('found or created folder: ' + folder)
+    download(folder)
 
 
 def print_header():
-    print('*' * 55)
-    print('                 REAL ESTATE APP')
-    print('*' * 55)
+    print('-' * 40)
+    print('               TEST FILE')
+    print('-' * 40)
 
 
-def get_data_file():
+def get_folder():
     base_folder = os.path.dirname(__file__)
-    return os.path.join(base_folder, 'data',
-                 'SacramentoTransactions.csv')
+    folder = 'TEST_FOLDER'
+    full_path = os.path.join(base_folder, folder)
+
+    if not os.path.exists(full_path) or not os.path.isdir(full_path):
+        print('creating new directory at {}'.format(full_path))
+        os.mkdir(full_path)
+
+    return full_path
 
 
-def load_file(filename):
-    with open(filename, 'r', encoding='utf-8') as fin:
+def download(folder):
+    print('Connecting to server to download cats..')
+    cat_count = 8
+    for i in range(1, cat_count + 1):
+        name = 'lolcat {}'.format(i)
+        print('Downloading cat ' + name)
+        cat_service.get_cat(folder, name)
 
-        reader = csv.DictReader(fin)
-        for row in reader:
-            print(type(row), row)
-            print("Bed count: {}".format(row['beds']))
-
-
-def query_data(data):
-    pass
+    print('....done.')
 
 
 if __name__ == '__main__':
