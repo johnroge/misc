@@ -20,7 +20,8 @@ def print_header():
 
 
 def get_hero_name():
-    pass
+    user_name = input('What is your character name? ')
+    return user_name
 
 
 def game_loop():
@@ -44,7 +45,7 @@ def game_loop():
     ]
 
     # TODO: get hero name from user
-    hero = Wizard('Stanly', 20, 50, 20, 30, 30, 5)
+    hero = Wizard('Billy', 20, 50, 20, 30, 30, 5)
 
     while True:
         """
@@ -62,10 +63,14 @@ def game_loop():
         if cmd == 'a':
             battle(hero, active_creature, creatures)
             if hero.is_alive:
-                print('Our hero has killed the {} '.format
+                print('Our hero has killed the {}!'.format
                       (active_creature.name))
             else:
-                print("Crap ..... the creature ate the hero")
+                print('OH NO! THE {} has killed our hero, {}!'.format(
+                    active_creature.name, hero.name
+                ))
+                print('GAME OVER')
+                break
         elif cmd == 'r':
             print('Our hero sneaks away to fight another day.')
         elif cmd == 'l':
@@ -108,10 +113,11 @@ def match(fighter1, fighter2):
     fighter1_attack = fighter1.attack()
     fighter2_defense = fighter2.get_defensive_roll()
 
-    time.sleep(2)
     print('{} attacks the {}!'.format(fighter1.name, fighter2.name))
     print('{} rolls a {}'.format(fighter1.name, fighter1_attack))
+    time.sleep(2)
     print('{} rolls a {}'.format(fighter2.name, fighter2_defense))
+    time.sleep(2)
 
     # call the hit_success function to determine a hit
     successful_hit = hit_success(fighter1_attack, fighter2_defense)
@@ -119,8 +125,10 @@ def match(fighter1, fighter2):
         print('{} successfully hits the {} for {} points of damage!'
               .format(fighter1.name, fighter2.name, fighter1_attack))
         fighter2.take_damage(fighter1_attack)
+        time.sleep(2)
     else:
         print('{} misses!'.format(fighter1.name))
+        time.sleep(2)
 
 
 def hit_success(attack_roll, defensive_roll):
