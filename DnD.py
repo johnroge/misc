@@ -92,11 +92,12 @@ def battle(hero, creature, creatures):
     :param creatures: full list of creatures to battle
     :return:
     """
-    match(hero, creature)
-    if creature.is_alive:
-        match(creature, hero)
-    else:
-        creatures.remove(creature)
+    while hero.is_alive and creature.is_alive:
+        match(hero, creature)
+        if creature.is_alive:
+            match(creature, hero)
+        else:
+            creatures.remove(creature)
 
 
 def match(fighter1, fighter2):
