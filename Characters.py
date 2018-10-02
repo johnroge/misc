@@ -71,13 +71,11 @@ class MedNPC(Creature):
 
 
 class Dragon(Creature):
-    def __init__(self, name, level, exp, weapon, health, scales, fire):
-        super().__init__(name, level, exp, weapon, health)
-        self.scales = scales
-        self.fire = fire
+    def __init__(self, name, level, exp, weapon, health, defense):
+        super().__init__(name, level, exp, weapon, health, defense)
 
     def get_defensive_roll(self):
-        def_roll = random.randint(1, 6) * self.level + self.scales
+        def_roll = random.randint(1, 6) * self.level
         return def_roll
 
     def attack(self):

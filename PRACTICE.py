@@ -1,42 +1,40 @@
 #!/usr/bin/env python3
+
 import os
-import cat_service
 
 
 def main():
-    print_header()
     folder = get_folder()
-    print('found or created folder: ' + folder)
-    download(folder)
+    if not folder:
+        print('Sorry we cannot search that location.')
+        return
 
+    text = get_text()
+    if not text:
+        print('need to search for something....')
+        return
 
-def print_header():
-    print('-' * 40)
-    print('               TEST FILE')
-    print('-' * 40)
+    search_file(folder, text)
 
 
 def get_folder():
-    base_folder = os.path.dirname(__file__)
-    folder = 'TEST_FOLDER'
-    full_path = os.path.join(base_folder, folder)
+    folder = input('What folder would you like to search? ')
+    if not folder or not folder.strip():
+        return None
 
-    if not os.path.exists(full_path) or not os.path.isdir(full_path):
-        print('creating new directory at {}'.format(full_path))
-        os.mkdir(full_path)
+    if not os.path.isdir(folder):
+        return None
 
-    return full_path
+    return os.path.abspath(folder)
 
 
-def download(folder):
-    print('Connecting to server to download cats..')
-    cat_count = 8
-    for i in range(1, cat_count + 1):
-        name = 'lolcat {}'.format(i)
-        print('Downloading cat ' + name)
-        cat_service.get_cat(folder, name)
+def get_text():
+    text = input('Search phrase ')
+    return text
 
-    print('....done.')
+
+def search_file(folder, text):
+    print('would search {} for {}.'.format(folder, text))
 
 
 if __name__ == '__main__':

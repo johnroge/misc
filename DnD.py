@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import time
-from misc.Characters import *
+from Characters import *
 
 
 def main():
@@ -33,18 +33,18 @@ def game_loop():
 
     # TODO: generate a random, ongoing list of creatures based on %
     creatures = [
-        SmallAnimal('Toad', 1, 2, 1, 5),
-        LargeAnimal('Tiger', 10, 20, 8, 150),
-        Dragon('Red Dragon', 50, 75, 60, 300, 20, True),
-        MedNPC('Ogre', 30, 15, 10, 200),
-        MedNPC('Troll', 10, 15, 10, 240),
-        MedNPC('Assassin', 30, 50, 10, 100),
-        MedNPC('Soldier', 20, 30, 15, 150),
-        MedNPC('Dwarf', 25, 40, 20, 200),
+        SmallAnimal('Toad', 1, 2, 1, 5, 1),
+        LargeAnimal('Tiger', 10, 20, 8, 150, 1),
+        Dragon('Red Dragon', 50, 75, 60, 300, 5),
+        MedNPC('Ogre', 30, 15, 10, 200, 1),
+        MedNPC('Troll', 10, 15, 10, 240, 1),
+        MedNPC('Assassin', 30, 50, 10, 100, 1),
+        MedNPC('Soldier', 20, 30, 15, 150, 1),
+        MedNPC('Dwarf', 25, 40, 20, 200, 1),
     ]
 
     # TODO: get hero name from user
-    hero = Wizard('Stanly', 20, 50, 20, 30, 30)
+    hero = Wizard('Stanly', 20, 50, 20, 30, 30, 5)
 
     while True:
         """
@@ -62,7 +62,7 @@ def game_loop():
         if cmd == 'a':
             battle(hero, active_creature, creatures)
             if hero.is_alive:
-                print('Our hero has landed a blow against the {} '.format
+                print('Our hero has killed the {} '.format
                       (active_creature.name))
             else:
                 print("Crap ..... the creature ate the hero")
@@ -108,7 +108,8 @@ def match(fighter1, fighter2):
     fighter1_attack = fighter1.attack()
     fighter2_defense = fighter2.get_defensive_roll()
 
-    print('The {} attacks the {}!'.format(fighter1.name, fighter2.name))
+    time.sleep(2)
+    print('{} attacks the {}!'.format(fighter1.name, fighter2.name))
     print('{} rolls a {}'.format(fighter1.name, fighter1_attack))
     print('{} rolls a {}'.format(fighter2.name, fighter2_defense))
 
