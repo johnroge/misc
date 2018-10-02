@@ -1,6 +1,7 @@
 import random
 
 
+# parent class 'Creature'
 class Creature:
     def __init__(self, name, level, exp, weapon, health, defense):
         self.name = name
@@ -36,7 +37,7 @@ class Wizard(Creature):
         return def_roll
 
     def attack(self):
-        attack_roll = random.randint(1, 6) * self.level + self.exp + self.magic
+        attack_roll = random.randint(1, 6) * self.level + self.exp * self.magic
         return attack_roll
 
 
@@ -71,13 +72,17 @@ class MedNPC(Creature):
 
 
 class Dragon(Creature):
-    def __init__(self, name, level, exp, weapon, health, defense):
+    def __init__(self, name, level, exp, weapon, health, defense, fire):
         super().__init__(name, level, exp, weapon, health, defense)
+        self.fire = fire
 
     def get_defensive_roll(self):
         def_roll = random.randint(1, 6) * self.level
         return def_roll
 
     def attack(self):
-        attack_roll = random.randint(1, 6) * self.level + self.weapon
+        fire_modifier = 5 if self.fire else 1
+        attack_roll = random.randint(1, 6) * self.level + self.weapon * (
+            fire_modifier
+        )
         return attack_roll

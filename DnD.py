@@ -5,11 +5,11 @@ from Characters import *
 
 
 def print_header():
-    print('*' * 70)
-    print('*' * 70)
-    print('  wizard game')
-    print('*' * 70)
-    print('*' * 70)
+    print('*' * 40)
+    print('*' * 40)
+    print('               wizard game')
+    print('*' * 40)
+    print('*' * 40)
     print()
 
 
@@ -23,19 +23,21 @@ def main():
     print_header()
 
     # TODO: generate a random, ongoing list of creatures based on %
+    # name, level, exp, weapon, health, defense
     creatures = [
         SmallAnimal('Toad', 1, 2, 1, 5, 1),
-        LargeAnimal('Tiger', 10, 20, 8, 150, 1),
-        Dragon('Red Dragon', 50, 75, 60, 300, 5),
+        LargeAnimal('Tiger', 10, 20, 8, 300, 1),
+        Dragon('Red Dragon', 50, 75, 60, 1000, 5, fire=True),
         MedNPC('Ogre', 30, 15, 10, 200, 1),
-        MedNPC('Troll', 10, 15, 10, 240, 1),
-        MedNPC('Assassin', 30, 50, 10, 100, 1),
+        MedNPC('Troll', 10, 15, 10, 300, 1),
+        MedNPC('Assassin', 30, 50, 10, 400, 1),
         MedNPC('Soldier', 20, 30, 15, 150, 1),
-        MedNPC('Dwarf', 25, 40, 20, 200, 1),
+        MedNPC('Dwarf', 25, 40, 20, 300, 1),
     ]
 
     name = input('What is your character name? ')
-    hero = Wizard(name, 20, 50, 20, 30, 30, 5)
+    # name, level, exp, weapon, health, defense, magic
+    hero = Wizard(name, 20, 50, 20, 800, 30, 5)
 
     while True:
         """
@@ -44,11 +46,11 @@ def main():
         """
 
         active_creature = random.choice(creatures)
+        print('You currently have {} health left.'.format(hero.health))
         print('\nA level {} {} has appeared at the edge of the forest..'
               .format(active_creature.level, active_creature.name))
         print()
 
-        # TODO: sanitize user input
         cmd = input('Do you [A]ttack [R]un or [L]ook? \n')
         cmd = cmd.lower()
         if cmd == 'a':
@@ -76,15 +78,18 @@ def main():
 
         if not creatures:
             print('\n\nThe forest has been cleared by the hero!')
+            print('YOU WIN!')
             print()
             break
 
 
 def battle(hero, creature, creatures):
     """
-    Main battle function, called by hero's attack
+    battle function calls match function if creature is still alive
+    to fight, removes from main list of creatures if killed
     :param hero: current player
     :param creature: active creature
+    :param creatures: full list of creatures to battle
     :return:
     """
     match(hero, creature)
@@ -96,9 +101,9 @@ def battle(hero, creature, creatures):
 
 def match(fighter1, fighter2):
     """
-    Main battle function, called by hero's attack
-    :param hero: current player
-    :param creature: active creature
+    main fighting function, called by battle function above
+    :param fighter1: current player
+    :param fighter2: active creature
     :return:
     """
     fighter1_attack = fighter1.attack()
