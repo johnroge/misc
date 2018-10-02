@@ -4,12 +4,6 @@ import time
 from Characters import *
 
 
-def main():
-    print_header()
-    get_hero_name()
-    game_loop()
-
-
 def print_header():
     print('*' * 70)
     print('*' * 70)
@@ -19,18 +13,14 @@ def print_header():
     print()
 
 
-def get_hero_name():
-    user_name = input('What is your character name? ')
-    return user_name
-
-
-def game_loop():
+def main():
     """
     Core game loop; identifies all the characters in play
     along with the main player (hero) and manages the end
     to end game play
     :return:
     """
+    print_header()
 
     # TODO: generate a random, ongoing list of creatures based on %
     creatures = [
@@ -44,8 +34,8 @@ def game_loop():
         MedNPC('Dwarf', 25, 40, 20, 200, 1),
     ]
 
-    # TODO: get hero name from user
-    hero = Wizard('Billy', 20, 50, 20, 30, 30, 5)
+    name = input('What is your character name? ')
+    hero = Wizard(name, 20, 50, 20, 30, 30, 5)
 
     while True:
         """
@@ -60,6 +50,7 @@ def game_loop():
 
         # TODO: sanitize user input
         cmd = input('Do you [A]ttack [R]un or [L]ook? \n')
+        cmd = cmd.lower()
         if cmd == 'a':
             battle(hero, active_creature, creatures)
             if hero.is_alive:
