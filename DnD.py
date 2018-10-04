@@ -25,19 +25,20 @@ def main():
     # TODO: generate a random, ongoing list of creatures based on %
     # name, level, exp, weapon, health, defense
     creatures = [
-        SmallAnimal('Toad', 1, 2, 1, 5, 1),
-        LargeAnimal('Tiger', 10, 20, 8, 300, 1),
-        Dragon('Red Dragon', 50, 75, 60, 1000, 5, fire=True),
-        MedNPC('Ogre', 30, 15, 10, 200, 1),
-        MedNPC('Troll', 10, 15, 10, 300, 1),
-        MedNPC('Assassin', 30, 50, 10, 400, 1),
-        MedNPC('Soldier', 20, 30, 15, 150, 1),
-        MedNPC('Dwarf', 25, 40, 20, 300, 1),
+        SmallAnimal('Toad', 1, 1, 1, 50, 1),
+        LargeAnimal('Tiger', 5, 3, 3, 200, 1),
+        Dragon('Red Dragon', 10, 8, 10, 800, 5, fire=True),
+        MedNPC('Ogre', 4, 5, 2, 200, 1),
+        MedNPC('Troll', 5, 4, 2, 300, 1),
+        MedNPC('Assassin', 6, 4, 4, 400, 1),
+        MedNPC('Soldier', 3, 2, 2, 150, 1),
+        MedNPC('Dwarf', 4, 3, 4, 350, 1),
     ]
 
     name = input('What is your character name? ')
+    name = name.title()
     # name, level, exp, weapon, health, defense, magic
-    hero = Wizard(name, 20, 50, 20, 800, 30, 5)
+    hero = Wizard(name, 3, 3, 3, 2000, 2, 2)
 
     while True:
         """
@@ -46,17 +47,17 @@ def main():
         """
 
         active_creature = random.choice(creatures)
-        print('You currently have {} health left.'.format(hero.health))
         print('\nA level {} {} has appeared at the edge of the forest..'
               .format(active_creature.level, active_creature.name))
         print()
 
-        cmd = input('Do you [A]ttack [R]un or [L]ook? \n')
+        cmd = input('Do you [A]ttack, [R]un, [I]nventory, [W]ait or'
+                    ' [L]ook? \n')
         cmd = cmd.lower()
         if cmd == 'a':
             battle(hero, active_creature, creatures)
             if hero.is_alive:
-                print('Our hero has killed the {}!'.format
+                print('****** Our hero has killed the {}! *******'.format
                       (active_creature.name))
             else:
                 print('OH NO! THE {} has killed our hero, {}!'.format(
@@ -67,10 +68,20 @@ def main():
         elif cmd == 'r':
             print('Our hero sneaks away to fight another day.')
         elif cmd == 'l':
-            print('Our hero looks around the forest and sees:')
+            print('{} looks around the forest and sees:'.format(
+                hero.name
+            ))
             for c in creatures:
                 print(' A {} of level {}.'.format(c.name, c.level))
                 time.sleep(2)
+        elif cmd == 'i':
+            print('You currently have {} health and {} experience.'.format(
+                hero.health, hero.exp
+            ))
+        elif cmd == 'w':
+            print('The hero has decided to rest their wounds for a bit.')
+            time.sleep(15)
+            hero.health = hero.health * 1.2
         else:
             # TODO: implement a specific exit along with game stats
             print('exiting game')
@@ -98,6 +109,7 @@ def battle(hero, creature, creatures):
             match(creature, hero)
         else:
             creatures.remove(creature)
+            hero.exp = hero.exp + creature.exp
 
 
 def match(fighter1, fighter2):
@@ -110,7 +122,7 @@ def match(fighter1, fighter2):
     fighter1_attack = fighter1.attack()
     fighter2_defense = fighter2.get_defensive_roll()
 
-    print('{} attacks the {}!'.format(fighter1.name, fighter2.name))
+    print('{} attacks {}!'.format(fighter1.name, fighter2.name))
     print('{} rolls a {}'.format(fighter1.name, fighter1_attack))
     time.sleep(2)
     print('{} rolls a {}'.format(fighter2.name, fighter2_defense))
@@ -119,11 +131,13 @@ def match(fighter1, fighter2):
     # call the hit_success function to determine a hit
     successful_hit = hit_success(fighter1_attack, fighter2_defense)
     if successful_hit:
-        print('{} successfully hits the {} for {} points of damage!'
+        print()
+        print('***** {} successfully hits the {} for {} points of damage!'
               .format(fighter1.name, fighter2.name, fighter1_attack))
         fighter2.take_damage(fighter1_attack)
         time.sleep(2)
     else:
+        print()
         print('{} misses!'.format(fighter1.name))
         time.sleep(2)
 

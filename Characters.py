@@ -27,23 +27,25 @@ class Creature:
             self.is_alive = False
 
 
+# TODO: Continue tweaking the defensive rolls and attacks
 class Wizard(Creature):
     def __init__(self, name, level, exp, weapon, health, defense, magic):
         super().__init__(name, level, exp, weapon, health, defense)
         self.magic = magic
 
     def get_defensive_roll(self):
-        def_roll = random.randint(1, 6) * self.level + self.defense
+        def_roll = random.randint(1, 4) * self.level * self.exp  \
+                   * self.defense
         return def_roll
 
     def attack(self):
-        attack_roll = random.randint(1, 6) * self.level + self.exp * self.magic
+        attack_roll = random.randint(1, 4) * self.level * self.exp * self.magic
         return attack_roll
 
 
 class SmallAnimal(Creature):
     def get_defensive_roll(self):
-        def_roll = random.randint(1, 6) * self.level + self.defense
+        def_roll = random.randint(1, 3) * self.level + self.defense
         return def_roll / 2
 
     def attack(self):
@@ -53,21 +55,21 @@ class SmallAnimal(Creature):
 
 class LargeAnimal(Creature):
     def get_defensive_roll(self):
-        def_roll = random.randint(1, 6) * self.level + self.defense
+        def_roll = random.randint(1, 5) * self.level + self.defense
         return def_roll
 
     def attack(self):
-        attack_roll = random.randint(1, 6) * self.level + self.weapon
+        attack_roll = random.randint(1, 5) * self.level + self.weapon
         return attack_roll
 
 
 class MedNPC(Creature):
     def get_defensive_roll(self):
-        def_roll = random.randint(1, 6) * self.level + self.defense
+        def_roll = random.randint(1, 4) * self.level + self.defense
         return def_roll
 
     def attack(self):
-        attack_roll = random.randint(1, 6) * self.level + self.weapon
+        attack_roll = random.randint(1, 4) * self.level + self.weapon
         return attack_roll
 
 
@@ -77,12 +79,12 @@ class Dragon(Creature):
         self.fire = fire
 
     def get_defensive_roll(self):
-        def_roll = random.randint(1, 6) * self.level
+        def_roll = random.randint(1, 7) * self.level
         return def_roll
 
     def attack(self):
         fire_modifier = 5 if self.fire else 1
-        attack_roll = random.randint(1, 6) * self.level + self.weapon * (
+        attack_roll = random.randint(1, 7) * self.level + self.weapon * (
             fire_modifier
         )
         return attack_roll
