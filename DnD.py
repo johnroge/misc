@@ -21,32 +21,13 @@ def main():
     :return:
     """
     print_header()
-
-    # TODO: generate a random, ongoing list of creatures based on %
-    # name, level, exp, weapon, health, defense
-    creatures = [
-        SmallAnimal('Toad', 1, 1, 1, 50, 1),
-        LargeAnimal('Tiger', 5, 3, 3, 200, 1),
-        Dragon('Red Dragon', 10, 8, 10, 800, 5, fire=True),
-        MedNPC('Ogre', 4, 5, 2, 200, 1),
-        MedNPC('Troll', 5, 4, 2, 300, 1),
-        MedNPC('Assassin', 6, 4, 4, 400, 1),
-        MedNPC('Soldier', 3, 2, 2, 150, 1),
-        MedNPC('Dwarf', 4, 3, 4, 350, 1),
-    ]
-
     name = input('What is your character name? ')
     name = name.title()
     # name, level, exp, weapon, health, defense, magic
-    hero = Wizard(name, 3, 3, 3, 2000, 2, 2)
+    hero = Wizard(name, 9, 10, 3, 400, 2, 8)
 
     while True:
-        """
-        Pulls a random creature from the creatures list and then
-        gives the hero 3 options - look, run, attack
-        """
-
-        active_creature = random.choice(creatures)
+        active_creature = npc()
         print('\nA level {} {} has appeared at the edge of the forest..'
               .format(active_creature.level, active_creature.name))
         print()
@@ -55,7 +36,7 @@ def main():
                     ' [L]ook? \n')
         cmd = cmd.lower()
         if cmd == 'a':
-            battle(hero, active_creature, creatures)
+            battle(hero, active_creature)
             if hero.is_alive:
                 print('****** Our hero has killed the {}! *******'.format
                       (active_creature.name))
@@ -87,14 +68,39 @@ def main():
             print('exiting game')
             break
 
-        if not creatures:
-            print('\n\nThe forest has been cleared by the hero!')
-            print('YOU WIN!')
-            print()
-            break
+
+def npc():
+    # create placeholders for common dice rolls
+    r_3 = random.randint(1, 3)
+    r_5 = random.randint(2, 5)
+    r_8 = random.randint(2, 8)
+    r_10 = random.randint(2, 10)
+    r_13 = random.randint(3, 13)
+    r_15 = random.randint(3, 15)
+    r_20 = random.randint(3, 20)
+    r_25 = random.randint(3, 25)
+    r_30 = random.randint(4, 30)
+    r_60 = random.randint(10, 60)
+    r_100 = random.randint(20, 100)
+    r_150 = random.randint(30, 150)
+    r_200 = random.randint(40, 200)
+
+    #        name - level - exp - weapon - health - defense
+    creatures = [
+        SmallAnimal('Toad', r_3, r_5, r_3, r_10, r_3),
+        LargeAnimal('Tiger', r_8, r_13, r_10, r_100, r_15),
+        Dragon('Red Dragon', r_15, r_30, r_15, r_200, r_60, fire=True),
+        MedNPC('Ogre', r_5, r_5, r_8, r_60, r_20),
+        MedNPC('Troll', r_8, r_8, r_8, r_100, r_25),
+        MedNPC('Assassin', r_10, r_10, r_20, r_100, r_20),
+        MedNPC('Soldier', r_8, r_8, r_8, r_60, r_15),
+        MedNPC('Dwarf', r_15, r_20, r_25, r_100, r_30),
+    ]
+    creature = random.choice(creatures)
+    return creature
 
 
-def battle(hero, creature, creatures):
+def battle(hero, creature):
     """
     battle function calls match function if creature is still alive
     to fight, removes from main list of creatures if killed
@@ -108,7 +114,6 @@ def battle(hero, creature, creatures):
         if creature.is_alive:
             match(creature, hero)
         else:
-            creatures.remove(creature)
             hero.exp = hero.exp + creature.exp
 
 
@@ -132,7 +137,7 @@ def match(fighter1, fighter2):
     successful_hit = hit_success(fighter1_attack, fighter2_defense)
     if successful_hit:
         print()
-        print('***** {} successfully hits the {} for {} points of damage!'
+        print('***** {} successfully hits {} for {} points of damage!'
               .format(fighter1.name, fighter2.name, fighter1_attack))
         fighter2.take_damage(fighter1_attack)
         time.sleep(2)
