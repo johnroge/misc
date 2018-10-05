@@ -49,12 +49,12 @@ def main():
             print('Our hero sneaks away to fight another day.')
         elif cmd == 'i':
             print('You currently have {} health and {} experience.'.format(
-                hero.health, hero.exp
+                round(hero.health), hero.exp
             ))
         elif cmd == 'w':
             print('The hero has decided to rest their wounds for a bit.')
             time.sleep(15)
-            hero.health = hero.health * 1.2
+            hero.health = round(hero.health * 1.2)
         else:
             # TODO: implement a specific exit along with game stats
             print('exiting game')
@@ -76,13 +76,27 @@ def npc():
     r_100 = random.randint(20, 100)
     r_150 = random.randint(30, 150)
     r_200 = random.randint(40, 200)
+    r_300 = random.randint(80, 300)
 
     #        name - level - exp - weapon - health - defense
     creatures = [
         SmallAnimal('Toad', r_3, r_5, r_3, r_10, r_3),
-        LargeAnimal('Tiger', r_8, r_13, r_10, r_100, r_15),
-        Dragon('Red Dragon', r_15, r_30, r_15, r_200, r_60, fire=True),
+        SmallAnimal('bat', r_3, r_5, r_3, r_10, r_3),
+        SmallAnimal('snake', r_3, r_5, r_8, r_15, r_8),
+        SmallAnimal('rat', r_3, r_5, r_5, r_10, r_3),
+        SmallAnimal('mongoose', r_5, r_8, r_8, r_20, r_10),
+        LargeAnimal('Tiger', r_10, r_13, r_20, r_100, r_15),
+        LargeAnimal('badger', r_8, r_15, r_20, r_100, r_25),
+        LargeAnimal('gorilla', r_20, r_25, r_25, r_150, r_60),
+        LargeAnimal('cougar', r_10, r_10, r_15, r_100, r_10),
+        LargeAnimal('flying monkey', r_15, r_25, r_25, r_100, r_30),
+        Dragon('Red Dragon', r_30, r_30, r_30, r_200, r_60, fire=True),
+        Dragon('Black Dragon', r_25, r_25, r_25, r_150, r_60, fire=False),
+        Dragon('Gold Dragon', r_60, r_60, r_60, r_300, r_100, fire=True),
+        Wizard('Evil Wizard', r_30, r_30, r_30, r_200, r_60, r_60),
         MedNPC('Ogre', r_5, r_5, r_8, r_60, r_20),
+        MedNPC('Archer', r_10, r_10, r_30, r_60, r_60),
+        MedNPC('Black Elf', r_15, r_15, r_30, r_100, r_60),
         MedNPC('Troll', r_8, r_8, r_8, r_100, r_25),
         MedNPC('Assassin', r_10, r_10, r_20, r_100, r_20),
         MedNPC('Soldier', r_8, r_8, r_8, r_60, r_15),
