@@ -32,8 +32,7 @@ def main():
               .format(active_creature.level, active_creature.name))
         print()
 
-        cmd = input('Do you [A]ttack, [R]un, [I]nventory, [W]ait or'
-                    ' [L]ook? \n')
+        cmd = input('Do you [A]ttack, [R]un, [I]nventory or [W]ait')
         cmd = cmd.lower()
         if cmd == 'a':
             battle(hero, active_creature)
@@ -48,13 +47,6 @@ def main():
                 break
         elif cmd == 'r':
             print('Our hero sneaks away to fight another day.')
-        elif cmd == 'l':
-            print('{} looks around the forest and sees:'.format(
-                hero.name
-            ))
-            for c in creatures:
-                print(' A {} of level {}.'.format(c.name, c.level))
-                time.sleep(2)
         elif cmd == 'i':
             print('You currently have {} health and {} experience.'.format(
                 hero.health, hero.exp
@@ -70,7 +62,7 @@ def main():
 
 
 def npc():
-    # create placeholders for common dice rolls
+    # shortcuts for common dice rolls
     r_3 = random.randint(1, 3)
     r_5 = random.randint(2, 5)
     r_8 = random.randint(2, 8)
@@ -106,8 +98,7 @@ def battle(hero, creature):
     to fight, removes from main list of creatures if killed
     :param hero: current player
     :param creature: active creature
-    :param creatures: full list of creatures to battle
-    :return:
+    :return: Winner of the battle, hero or the creature
     """
     while hero.is_alive and creature.is_alive:
         match(hero, creature)
@@ -122,11 +113,14 @@ def match(fighter1, fighter2):
     main fighting function, called by battle function above
     :param fighter1: current player
     :param fighter2: active creature
-    :return:
+    :return: Successful hit and damage or a miss
     """
+
+    # get the respective attack and defense rolls
     fighter1_attack = fighter1.attack()
     fighter2_defense = fighter2.get_defensive_roll()
 
+    # show user the results of the attack
     print('{} attacks {}!'.format(fighter1.name, fighter2.name))
     print('{} rolls a {}'.format(fighter1.name, fighter1_attack))
     time.sleep(2)
@@ -136,10 +130,12 @@ def match(fighter1, fighter2):
     # call the hit_success function to determine a hit
     successful_hit = hit_success(fighter1_attack, fighter2_defense)
     if successful_hit:
+        # show damage to user and deduct from loser's health
         print()
         print('***** {} successfully hits {} for {} points of damage!'
               .format(fighter1.name, fighter2.name, fighter1_attack))
         fighter2.take_damage(fighter1_attack)
+        fighter1.exp += 1
         time.sleep(2)
     else:
         print()
@@ -148,6 +144,8 @@ def match(fighter1, fighter2):
 
 
 def hit_success(attack_roll, defensive_roll):
+    # determine hit success by pitting size of attack roll against
+    # defensive roll
     if attack_roll >= defensive_roll:
         return True
     else:
