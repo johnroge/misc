@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03d34eef-a45f-4b4c-b99d-a0a15104c0dc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/os_walk_example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dups.py" beforeDir="false" afterPath="$PROJECT_DIR$/dups.py" afterDir="false" />
     </list>
@@ -46,34 +47,35 @@
     <session id="-345790921">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.7" value="3" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.open.time.7" value="4" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="6" />
+          <entry key="py" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="6" />
+          <entry key="Python" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="5350" />
+          <entry key="Python" value="6306" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="5350" />
+          <entry key="py" value="6306" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -118,10 +120,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dups.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="38" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+            <state relative-caret-position="867">
+              <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
               <folding>
-                <element signature="e#239#248#0" expanded="true" />
+                <element signature="e#257#266#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,12 +151,13 @@
         <option value="$PROJECT_DIR$/Characters.py" />
         <option value="$PROJECT_DIR$/DnD.py" />
         <option value="$PROJECT_DIR$/dups.py" />
+        <option value="$PROJECT_DIR$/os_walk_example.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1333" />
-    <option name="y" value="-1943" />
+    <option name="x" value="1912" />
+    <option name="y" value="-1102" />
     <option name="width" value="1096" />
     <option name="height" value="1896" />
   </component>
@@ -183,6 +186,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -194,7 +198,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -213,7 +216,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.DnD">
+  <component name="RunManager" selected="Python.os_walk_example">
     <configuration name="DnD" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="misc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -227,27 +230,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DnD.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="P2" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="misc" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/P2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -298,6 +280,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="os_walk_example" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="misc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/os_walk_example.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="website_blocker" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="misc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -320,19 +323,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.P2" />
       <item itemvalue="Python.dups" />
       <item itemvalue="Python.PRACTICE" />
       <item itemvalue="Python.website_blocker" />
       <item itemvalue="Python.DnD" />
+      <item itemvalue="Python.os_walk_example" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.os_walk_example" />
         <item itemvalue="Python.DnD" />
         <item itemvalue="Python.PRACTICE" />
         <item itemvalue="Python.website_blocker" />
         <item itemvalue="Python.dups" />
-        <item itemvalue="Python.P2" />
       </list>
     </recent_temporary>
   </component>
@@ -350,15 +353,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1333" y="-1943" width="1096" height="1896" extended-state="6" />
+    <frame x="2453" y="-1094" width="554" height="1887" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49842602" visible="true" weight="0.15879017" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49842602" visible="true" weight="0.17829457" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.501574" side_tool="true" weight="0.052331112" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" x="-496" y="-1052" width="1471" height="936" id="Run" order="2" type="FLOATING" weight="0.20184049" />
+      <window_info anchor="bottom" x="769" y="45" width="1115" height="1238" id="Run" order="2" type="FLOATING" weight="0.20184049" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -403,11 +406,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
-          <folding>
-            <element signature="e#24#35#0" expanded="true" />
-            <element signature="e#87#214#0" />
-            <element signature="e#233#394#1" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -418,12 +416,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/os_walk_example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dups.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="38" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+        <state relative-caret-position="867">
+          <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
           <folding>
-            <element signature="e#239#248#0" expanded="true" />
+            <element signature="e#257#266#0" expanded="true" />
           </folding>
         </state>
       </provider>
