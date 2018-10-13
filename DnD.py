@@ -84,7 +84,7 @@ def npc():
         Dragon('Red Dragon', r_15, r_30, r_15, r_200, r_60, fire=True),
         MedNPC('Ogre', r_5, r_5, r_8, r_60, r_20),
         MedNPC('Troll', r_8, r_8, r_8, r_100, r_25),
-        MedNPC('Assassin', r_10, r_10, r_20, r_100, r_20),
+        MedNPC('Assassin', r_10, r_10, r_20, r_150, r_20),
         MedNPC('Soldier', r_8, r_8, r_8, r_60, r_15),
         MedNPC('Dwarf', r_15, r_20, r_25, r_100, r_30),
     ]
