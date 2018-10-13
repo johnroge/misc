@@ -3,16 +3,18 @@
 Find duplicate files between two given folders first based on file size
 and then based on md5 hash of each file.
 Using file size first to increase speed when searching very large folders.
-v0.2 September 2018
+v1 September 2018
+johnroge AT outlook
 """
 import os
 import hashlib
 
 
+# TODO: Give option to check subfolders
 def main():
-    '''
+    """
     :return: Return a list of duplicate files
-    '''
+    """
     folder_one = get_folder()
     folder_two = get_folder()
     list_one = []
@@ -38,12 +40,12 @@ def main():
 
 
 def get_hash(file):
-    hash = hashlib.md5()
+    the_hash = hashlib.md5()
     with open(file, 'rb') as afile:
         buf = afile.read()
-        hash.update(buf)
+        the_hash.update(buf)
 
-    return hash.hexdigest()
+    return the_hash.hexdigest()
 
 
 def get_file_path(directory):
