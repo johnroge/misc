@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+"""
+basic examples from f5 sdk
+Notes: Converted to python3 syntax but not tested
+Last Updated: 02/16/2019
+"""
+
+
 from f5.bigip import ManagementRoot
 
 # Connect to the BigIP and configure the basic objects
@@ -20,52 +28,49 @@ pool_2 = mgmt.tm.ltm.pools.pool.load(partition='Common', name='pool1')
 assert pool_1.name == pool_2.name
 assert pool_1.generation == pool_2.generation
 
-print pool_1.name
-pool1
-print pool_2.name
-pool1
-print pool_1.generation
-209
-print pool_2.generation
-209
+print(pool_1.name)
+print(pool_2.name)
+print(pool_1.generation)
+print(pool_2.generation)
 
 # Update the pool description
 pool_1.description = "This is my pool"
 pool_1.update()
 
 # Check the updated description
-print pool_1.description
-This is my first pool
+print(pool_1.description)
+print('This is my first pool')
 
 # Since we haven't refreshed pool_2 it shouldn't match pool_1 any more
-print pool_2.description
-This is my pool
+print(pool_2.description)
+print('This is my pool')
 
 # Refresh pool_2 and check that is now equal
 pool_2.refresh()
-print pool_2.description
-This is my first pool
+print(pool_2.description)
+print('This is my first pool')
 
-print pool_1.generation
-210
-print pool_2.generation
-208
+print(pool_1.generation)
+print(pool_2.generation)
 
 # Create members on pool_1
 members = pool_1.members_s
 member = pool_1.members_s.members
 
-m1 = pool_1.members_s.members.create(partition='Common', name='192.168.101.50:80')
-m2 = pool_1.members_s.members.create(partition='Common', name='192.168.101.51:80')
+m1 = pool_1.members_s.members.create(partition='Common',
+                                     name='192.168.101.50:80')
+m2 = pool_1.members_s.members.create(partition='Common',
+                                     name='192.168.101.51:80')
 
 # load the pool members
-m1 = pool_1.members_s.members.load(partition='Common', name='192.168.101.50:80')
-m2 = pool_1.members_s.members.load(partition='Common', name='192.168.101.50:80')
+# m1 = pool_1.members_s.members.load(partition='Common',
+#                                    name='192.168.101.50:80')
+# m2 = pool_1.members_s.members.load(partition='Common',
+#                                    name='192.168.101.50:80')
 
 # Get all of the pool members for pool_1 and print their names
-
 for member in members:
-    print member.name
+    print(member.name)
 
 # Delete our pool member m1
 m1.delete()
@@ -78,6 +83,6 @@ if pool_1.members_s.members.exists(partition='Common', name='192.168.101.50:80')
 pool_1.delete()
 
 # Make sure it is gone
-
 if mgmt.tm.ltm.pools.pool.exists(partition='Common', name='mypool'):
     raise Exception("Object should have been deleted")
+
