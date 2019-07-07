@@ -40,7 +40,10 @@ def exit_program():
 
 
 def new_session():
-    pass
+    file_location = input('Please enter a source file:')
+    number_nouns = input('How many words would you like to try?')
+
+
 
 
 def show_all():
@@ -56,4 +59,5 @@ def extract_nouns():
 
 
 if __name__ == '__main__':
+    current_words = []
     menu(options())
