@@ -3,6 +3,7 @@
 
 import time
 import os
+import random
 
 
 def menu(prompt):
@@ -33,31 +34,39 @@ def options():
 
 
 def exit_program():
-    print("exiting program.....")
-    time.sleep(4)
+    print("\nexiting program.....")
+    time.sleep(3)
     os.system('cls' if os.name == 'nt' else 'clear')
     raise SystemExit
 
 
 def new_session():
     file_location = input('Please enter a source file:')
-    number_nouns = input('How many words would you like to try?')
+    number_nouns = int(input('How many words would you like to try?'))
 
+    words = extract_nouns(file_location, number_nouns)
 
+    for word in words:
+        print(word)
+        time.sleep(3)
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def show_all():
     pass
 
 
-def get_noun_file():
-    pass
+def extract_nouns(file_location, number_nouns):
+    noun_list = []
+    current_words = []
+    with open(file_location, 'r') as infile:
+        for line in infile.readlines():
+            noun_list.append(line.strip("\n"))
 
+    current_words.append(random.sample(noun_list, number_nouns))
 
-def extract_nouns():
-    pass
+    return current_words
 
 
 if __name__ == '__main__':
-    current_words = []
     menu(options())
