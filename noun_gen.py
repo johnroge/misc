@@ -46,15 +46,23 @@ def new_session():
 
     words = extract_nouns(file_location, number_nouns)
 
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print('Ready? Starting in 3..')
+    time.sleep(1)
+    print('2')
+    time.sleep(1)
+    print('1')
+    time.sleep(1)
+    os.system('cls' if os.name == 'nt' else 'clear')
+
     for word in words:
         print(word)
-        time.sleep(3)
+        time.sleep(2)
         os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def show_all():
     pass
-
 
 
 def extract_nouns(file_location, number_nouns):
@@ -64,7 +72,10 @@ def extract_nouns(file_location, number_nouns):
         for line in infile.readlines():
             noun_list.append(line.strip("\n"))
 
-    current_words.append(random.sample(noun_list, number_nouns))
+    counter = number_nouns
+    while counter >= 1:
+        current_words.append(random.choice(noun_list))
+        counter -= 1
 
     return current_words
 
