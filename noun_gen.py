@@ -53,6 +53,8 @@ def new_session():
 
 
 def show_all():
+    pass
+
 
 
 def extract_nouns(file_location, number_nouns):
