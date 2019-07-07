@@ -14,10 +14,8 @@ def menu(prompt):
             exit_program()
         elif response == '2':
             new_session()
-        elif response == '3':
-            show_all()
         else:
-            print('Please enter a number between 1 and 3')
+            print('Please enter either 1 or 2.')
 
 
 def options():
@@ -26,7 +24,6 @@ def options():
         "Please choose from the following options:\n"
         "1: exit the program\n"
         "2: start a new session\n"
-        "3: show the current list in full\n"
         ">>>>> "
     )
 
@@ -60,9 +57,14 @@ def new_session():
         time.sleep(2)
         os.system('cls' if os.name == 'nt' else 'clear')
 
+    see_list = input('Press x to see the full list, any other key for '
+                     'main menu.')
+    see_list = see_list.lower()
 
-def show_all():
-    pass
+    if see_list == 'x':
+        print(words)
+    else:
+        pass
 
 
 def extract_nouns(file_location, number_nouns):
