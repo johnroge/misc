@@ -7,6 +7,11 @@ import random
 
 
 def menu(prompt):
+    """
+    Call the various functions
+    :param prompt: User input
+    :return: None - Calls selected function
+    """
 
     while True:
         response = input(prompt)
@@ -19,6 +24,10 @@ def menu(prompt):
 
 
 def options():
+    """
+    Main user menu
+    :return: Return user selection user_prompt
+    """
     user_prompt = (
         "\nWelcome to memory test\n"
         "Please choose from the following options:\n"
@@ -31,6 +40,10 @@ def options():
 
 
 def exit_program():
+    """
+    Exit program
+    :return: None - calls system exit
+    """
     print("\nexiting program.....")
     time.sleep(3)
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -38,6 +51,10 @@ def exit_program():
 
 
 def new_session():
+    """
+    Core logic for a new user session
+    :return: None - selects and displays nouns
+    """
     file_location = input('Please enter a source file:')
     number_nouns = int(input('How many words would you like to try?'))
 
@@ -68,6 +85,12 @@ def new_session():
 
 
 def extract_nouns(file_location, number_nouns):
+    """
+    Get user input and extract nouns from a given file
+    :param file_location: Location of file containing master list of nouns
+    :param number_nouns: Number of nouns to extract from master list
+    :return: Return list of random nouns pulled from master list
+    """
     noun_list = []
     current_words = []
     with open(file_location, 'r') as infile:
