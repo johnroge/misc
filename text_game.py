@@ -4,6 +4,8 @@ simple text game similar to dungeons and dragons
 useful for practicing with classes, methods and flow control
 """
 
+from game_characters import Wizard, Creature
+
 
 def main():
     """
@@ -23,6 +25,16 @@ def print_header():
 
 def game_loop():
 
+    creatures = [
+        Creature(),
+        Creature(),
+        Creature(),
+        Creature(),
+        Creature(),
+    ]
+
+    hero = Wizard()
+
     while True:
 
         cmd = input('Do you [A]ttack, [R]un away, or [L]ook around?')
@@ -35,6 +47,7 @@ def game_loop():
             print('looks around')
         else:
             print('Exiting game...')
+            break
 
 
 if __name__ == '__main__':
