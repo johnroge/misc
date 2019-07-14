@@ -2,6 +2,7 @@
 """
 simple text game similar to dungeons and dragons
 useful for practicing with classes, methods and flow control
+v1.0
 """
 
 from game_characters import Wizard, Creature, LargeCreature,\
@@ -11,10 +12,6 @@ import time
 
 
 def main():
-    """
-
-    :return:
-    """
     print_header()
     game_loop()
 
@@ -22,12 +19,15 @@ def main():
 def print_header():
     print()
     print('-' * 40)
-    print('         WIZARD GAME APP')
+    print('   WELCOME TO THE WIZARD GAME APP')
+    print('                                   v1.0')
     print('-' * 40)
     print()
 
 
-def game_loop():
+def get_creatures():
+    # TODO: create a randomized set of creatures based on probability
+    # TODO: randomize the creature stats within a certain range
     creatures = [
         # name, level, health
         Creature('wolf', 5, 10),
@@ -41,8 +41,22 @@ def game_loop():
         LargeCreature('dragon', 20, 50, 30),
     ]
 
+    return creatures
+
+
+def get_player_info():
+    # TODO: track player health
+    player_name = input('What is your name, hero? ')
+    return player_name.capitalize()
+
+
+def game_loop():
+
+    creatures = get_creatures()
+    name = get_player_info()
+
     # name, level, health, magic
-    hero = Wizard('Gandolf', 20, 100, 50)
+    player_1 = Wizard(name, 20, 100, 50)
 
     while True:
 
@@ -53,19 +67,20 @@ def game_loop():
         cmd = input('--> Do you [A]ttack, [R]un away, or [L]ook around?')
         cmd = cmd.lower()
         if cmd == 'a':
-            if hero.attack(active_creature):
+            if player_1.attack(active_creature):
                 creatures.remove(active_creature)
             else:
                 time.sleep(2)
-                print('Our hero runs and hides to recover his wounds..')
+                print(f'Our hero {player_1.name} runs and hides to '
+                      f'recover his wounds..')
                 time.sleep(5)
                 print()
-                print('Our hero has returned, rested and ready for'
-                      ' adventure!')
+                print(f'Our hero {player_1.name} has returned, rested '
+                      f'and ready for another adventure!')
         elif cmd == 'r':
-            print('Our hero runs away to fight another day!')
+            print(f'{player_1.name} bravely runs away!')
         elif cmd == 'l':
-            print('The Wizard looks around and sees: ')
+            print(f'{player_1.name} looks around and sees: ')
             for c in creatures:
                 print(f' * A {c.name} of level {c.level}')
         else:
