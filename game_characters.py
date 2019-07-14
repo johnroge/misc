@@ -3,10 +3,11 @@ import random
 
 
 class Creature:
-    def __init__(self, name, level, health):
+    def __init__(self, name, level, health, defense):
         self.name = name
         self.level = level
         self.health = health
+        self.defense = defense
 
     def __repr__(self):
         return "Creature {} of {} level and {} health.".format(
@@ -15,13 +16,16 @@ class Creature:
             self.health
         )
 
+    def attack(self):
+        return random.randint(1, 10) + self.level
+
     def defensive_roll(self):
-        return random.randint(1, 10) * self.level
+        return random.randint(1, 10) + self.defense
 
 
 class LargeCreature(Creature):
-    def __init__(self, name, level, health, armor):
-        super().__init__(name, level, health)
+    def __init__(self, name, level, health, defense, armor):
+        super().__init__(name, level, health, defense)
         self.armor = armor
 
     def defensive_roll(self):
@@ -31,9 +35,14 @@ class LargeCreature(Creature):
 
 
 class MagicalCreature(Creature):
-    def __init__(self, name, level, health, magic):
-        super().__init__(name, level, health)
+    def __init__(self, name, level, health, defense, magic):
+        super().__init__(name, level, health, defense)
         self.magic = magic
+
+    def attack(self):
+        base_attack = super().attack()
+        modifier = self.magic
+        return base_attack + modifier
 
     def defensive_roll(self):
         base_roll = super().defensive_roll()
@@ -41,23 +50,17 @@ class MagicalCreature(Creature):
         return base_roll + modifier
 
 
-class Wizard(Creature):
-    def __init__(self, name, level, health, magic):
-        super().__init__(name, level, health)
-        self.magic = magic
+class Wizard(MagicalCreature):
+    def __init__(self, name, level, health, defense, magic, wisdom):
+        super().__init__(name, level, health, defense, magic)
+        self.wisdom = wisdom
 
-    def attack(self, creature):
-        print(f'The Wizard {self.name} attacks the {creature.name}!')
+    def attack(self):
+        base_attack = super().attack()
+        modifier = self.wisdom
+        return base_attack + modifier
 
-        modifier = self.magic
-        my_roll = self.defensive_roll() + modifier
-        creature_roll = creature.defensive_roll()
-
-        print(f'You roll a {my_roll} versus the {creature.name} rolling'
-              f' a {creature_roll}.')
-
-        if my_roll >= creature_roll:
-            print(f'You have killed the {creature.name}!')
-            return True
-        else:
-            print(f'Sadly you have been defeated by the {creature.name}..')
+    def defensive_roll(self):
+        base_roll = super().defensive_roll()
+        modifier = self.wisdom
+        return base_roll + modifier
