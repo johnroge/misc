@@ -4,7 +4,8 @@ simple text game similar to dungeons and dragons
 useful for practicing with classes, methods and flow control
 """
 
-from game_characters import Wizard, Creature
+from game_characters import Wizard, Creature, LargeCreature,\
+    MagicalCreature
 import random
 import time
 
@@ -28,14 +29,20 @@ def print_header():
 
 def game_loop():
     creatures = [
+        # name, level, health
         Creature('wolf', 5, 10),
-        Creature('orc', 10, 20),
-        Creature('goblin', 10, 15),
-        Creature('dark elf', 15, 30),
-        Creature('dragon', 20, 50),
+        Creature('poisonous snake', 3, 5),
+        Creature('elk', 5, 10),
+        # name, level, health, magic
+        MagicalCreature('goblin', 10, 15, 10),
+        MagicalCreature('dark elf', 15, 30, 15),
+        # name, level, health, magic
+        LargeCreature('orc', 10, 20, 5),
+        LargeCreature('dragon', 20, 50, 30),
     ]
 
-    hero = Wizard('Gandolf', 20, 100)
+    # name, level, health, magic
+    hero = Wizard('Gandolf', 20, 100, 50)
 
     while True:
 
@@ -64,6 +71,10 @@ def game_loop():
         else:
             print('Exiting game...')
             break
+
+        if not creatures:
+            print('The forest has been cleared of creatures!')
+            print()
 
 
 if __name__ == '__main__':
