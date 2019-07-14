@@ -11,6 +11,7 @@ import random
 import time
 import os
 # TODO: create random items that can be used in game play
+# TODO: create doc strings for all functions
 
 
 def main():
@@ -18,6 +19,12 @@ def main():
     player = get_player_info()
     creatures = get_creatures()
     game_loop(player, creatures)
+
+
+def current_monster(creature):
+    print()
+    print(f'A level {creature.level} {creature.name} '
+          f'appears in the clearing...')
 
 
 def print_header():
@@ -63,15 +70,10 @@ def get_player_info():
 
 
 def game_loop(player, creatures):
-
     while True:
-
-        cmd = user_action()
         active_creature = random.choice(creatures)
-
-        print()
-        print(f'A level {active_creature.level} {active_creature.name} '
-              f'appears in the clearing...')
+        current_monster(active_creature)
+        cmd = user_action()
 
         if cmd == 'a':
             battle_loop(player, active_creature, creatures)
@@ -104,9 +106,8 @@ def game_exit():
 
 
 def battle_loop(player, active_creature, creatures):
-    # TODO: provide more detail in game play
-    # TODO: increase player level based on winning
 
+    win_bonus = round(active_creature.level * .5)
     while player.health >= 0 and active_creature.health >= 0:
         player_attack(player, active_creature)
         if active_creature.health <= 0:
@@ -125,7 +126,7 @@ def battle_loop(player, active_creature, creatures):
             print('       GAME OVER')
             print('-' * 45)
             time.sleep(6)
-            raise SystemExit
+            game_exit()
         elif player.health <= 30:
             print(f'{player.name} has been critically wounded, but manages '
                   f'to escape with his life.')
@@ -133,6 +134,8 @@ def battle_loop(player, active_creature, creatures):
             break
         else:
             pass
+
+    player.level += win_bonus
 
 
 def look_around(player, creatures):
@@ -190,3 +193,4 @@ def creature_attack(active_creature, player):
 
 if __name__ == '__main__':
     main()
+
