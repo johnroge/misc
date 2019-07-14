@@ -68,11 +68,12 @@ def game_loop():
               f'appears in the clearing...')
 
         cmd = input('--> Do you [A]ttack, [R]un away, [L]ook around or '
-                    '[V]iew current player stats?')
+                    '[V]iew current player stats?\n ---> Press any '
+                    'other key to exit game to console: ')
         cmd = cmd.lower()
         if cmd == 'a':
             os.system('cls' if os.name == 'nt' else 'clear')
-            battle(player_1, active_creature, creatures)
+            battle_loop(player_1, active_creature, creatures)
         elif cmd == 'r':
             print(f'{player_1.name} bravely runs away!')
         elif cmd == 'l':
@@ -96,13 +97,15 @@ def game_loop():
             print('-' * 45)
 
 
-def battle(player, active_creature, creatures):
+def battle_loop(player, active_creature, creatures):
     # TODO: give player chance to run if below threshold
     # TODO: provide more detail in game play
     # TODO: increase player level based on winning
+    # TODO: break some of this into smaller functions if possible
 
     while player.health >= 0 and active_creature.health >= 0:
-        hero_attack = player.attack()
+        # player attacks creature
+        hero_attack = player.attack_roll()
         creature_defense = active_creature.defensive_roll()
         if hero_attack >= creature_defense:
             print(f'{player.name} attacks the {active_creature.name}!')
@@ -119,8 +122,9 @@ def battle(player, active_creature, creatures):
         else:
             print(f'The {active_creature.name} has dodged your attack...')
 
+        # creature attacks player
         time.sleep(2)
-        creature_attack = active_creature.attack()
+        creature_attack = active_creature.attack_roll()
         player_defense = player.defensive_roll()
         print(f'{active_creature.name} fights back!')
         time.sleep(1)
@@ -137,6 +141,14 @@ def battle(player, active_creature, creatures):
                 break
         else:
             print(f'{player.name} has dodged the attack!')
+
+
+def player_attack(player, active_creature):
+    pass
+
+
+def creature_attack(active_creature, player):
+    pass
 
 
 if __name__ == '__main__':

@@ -2,6 +2,9 @@
 import random
 
 
+# TODO: create some decorators
+# TODO: add some magic methods
+# TODO: create new methods
 class Creature:
     def __init__(self, name, level, health, defense):
         self.name = name
@@ -16,7 +19,7 @@ class Creature:
             self.health
         )
 
-    def attack(self):
+    def attack_roll(self):
         return random.randint(1, 10) + self.level
 
     def defensive_roll(self):
@@ -39,8 +42,8 @@ class MagicalCreature(Creature):
         super().__init__(name, level, health, defense)
         self.magic = magic
 
-    def attack(self):
-        base_attack = super().attack()
+    def attack_roll(self):
+        base_attack = super().attack_roll()
         modifier = self.magic
         return base_attack + modifier
 
@@ -50,8 +53,8 @@ class Wizard(MagicalCreature):
         super().__init__(name, level, health, defense, magic)
         self.wisdom = wisdom
 
-    def attack(self):
-        base_attack = super().attack()
+    def attack_roll(self):
+        base_attack = super().attack_roll()
         modifier = self.wisdom
         return base_attack + modifier
 
