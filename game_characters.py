@@ -44,11 +44,6 @@ class MagicalCreature(Creature):
         modifier = self.magic
         return base_attack + modifier
 
-    def defensive_roll(self):
-        base_roll = super().defensive_roll()
-        modifier = self.magic
-        return base_roll + modifier
-
 
 class Wizard(MagicalCreature):
     def __init__(self, name, level, health, defense, magic, wisdom):
