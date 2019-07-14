@@ -53,6 +53,11 @@ class Wizard(MagicalCreature):
         super().__init__(name, level, health, defense, magic)
         self.wisdom = wisdom
 
+    def __repr__(self):
+        return f'{self.name} is a level {self.level} wizard with ' \
+            f'{self.health} health, {self.magic} magic, and' \
+            f' {self.wisdom} wisdom.'
+
     def attack_roll(self):
         base_attack = super().attack_roll()
         modifier = self.wisdom

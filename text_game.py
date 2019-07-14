@@ -2,7 +2,7 @@
 """
 simple text game similar to dungeons and dragons
 useful for practicing with classes, methods and flow control
-v1.3
+v1.5
 """
 
 from game_characters import Wizard, Creature, LargeCreature,\
@@ -18,10 +18,11 @@ def main():
 
 
 def print_header():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print()
     print('-' * 40)
     print('   WELCOME TO THE WIZARD GAME APP')
-    print('                                   v1.3')
+    print('                                   v1.5')
     print('-' * 40)
     print()
 
@@ -46,19 +47,23 @@ def get_creatures():
 
 
 def get_player_info():
-    player_name = input('What is your name, hero? ')
-    return player_name.capitalize()
+    name = input('What is your name, hero? ')
+    name = name.capitalize()
+    player = Wizard(name,
+                    20,  # level
+                    300, # health
+                    5,   # defense
+                    5,   # magic
+                    5)   # wisdom
+
+    return player
 
 
 def game_loop():
-    # TODO: give player change to rest and heal by % current health
+    # TODO: give player chance to rest and heal by % current health
     # TODO: create random items that can be used in game play
-    # TODO: break some of these into discrete functions
     creatures = get_creatures()
-    name = get_player_info()
-
-    # name, level, health, defense, magic, wisdom
-    player_1 = Wizard(name, 20, 200, 6, 5, 5)
+    player = get_player_info()
 
     while True:
 
@@ -67,38 +72,38 @@ def game_loop():
         print(f'A level {active_creature.level} {active_creature.name} '
               f'appears in the clearing...')
 
-        cmd = input('--> Do you [A]ttack, [R]un away, [L]ook around or '
-                    '[V]iew current player stats?\n ---> Press any '
-                    'other key to exit game to console: ')
-        cmd = cmd.lower()
+        cmd = user_action()
+
         if cmd == 'a':
-            os.system('cls' if os.name == 'nt' else 'clear')
-            battle_loop(player_1, active_creature, creatures)
+            battle_loop(player, active_creature, creatures)
         elif cmd == 'r':
-            print(f'{player_1.name} bravely runs away!')
+            print(f'{player.name} bravely runs away!')
         elif cmd == 'l':
-            print(f'{player_1.name} looks around and sees: ')
-            for c in creatures:
-                print(f' * A {c.name} of level {c.level}')
+            look_around(player, creatures)
         elif cmd == 'v':
-            print(f'NAME: {player_1.name}')
-            print(f'LEVEL: {player_1.level}')
-            print(f'HEALTH: {player_1.health}')
-            print(f'DEFENSE: {player_1.defense}')
-            print(f'MAGIC: {player_1.magic}')
-            print(f'WISDOM: {player_1.wisdom}')
+            print(player.__repr__())
         else:
-            print('Exiting game...')
-            break
+            game_exit()
 
         if not creatures:
-            print('-' * 45)
-            print('The forest has been cleared of creatures!')
-            print('-' * 45)
+            game_won()
+
+
+def user_action():
+    # TODO: add feature for loading and saving game
+    cmd = input('--> Do you [A]ttack, [R]un away, [L]ook around or '
+                '[V]iew current player stats?\n ---> Press any '
+                'other key to exit game to console: ')
+    cmd = cmd.lower()
+    return cmd
+
+
+def game_exit():
+    # TODO: add save feature
+    raise SystemExit
 
 
 def battle_loop(player, active_creature, creatures):
-    # TODO: give player chance to run if below threshold
     # TODO: provide more detail in game play
     # TODO: increase player level based on winning
 
@@ -110,9 +115,12 @@ def battle_loop(player, active_creature, creatures):
         else:
             creature_attack(active_creature, player)
 
-        # TODO: end game if health below 0
         if player.health <= 0:
-            print(f'{player.name} has been killed in battle.')
+            os.system('cls' if os.name == 'nt' else 'clear')
+            time.sleep(2)
+            print(f'{player.name} has heroically died in battle...')
+            time.sleep(3)
+            os.system('cls' if os.name == 'nt' else 'clear')
             print('-' * 45)
             print('       GAME OVER')
             print('-' * 45)
@@ -127,7 +135,24 @@ def battle_loop(player, active_creature, creatures):
             pass
 
 
+def look_around(player, creatures):
+    print(f'{player.name} looks around and sees: ')
+    for c in creatures:
+        print(f' * A {c.name} of level {c.level}')
+
+
+def game_won():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print('-' * 45)
+    print('Congratulations!')
+    print('The forest has been cleared of creatures!')
+    print('-' * 45)
+    time.sleep(6)
+    raise SystemExit
+
+
 def player_attack(player, active_creature):
+    os.system('cls' if os.name == 'nt' else 'clear')
     player_roll = player.attack_roll()
     creature_roll = active_creature.defensive_roll()
     print(f'Our hero has attacked the {active_creature.name}!')
