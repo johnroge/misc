@@ -20,7 +20,7 @@ def print_header():
     print()
     print('-' * 40)
     print('   WELCOME TO THE WIZARD GAME APP')
-    print('                                   v1.0')
+    print('                                   v1.2')
     print('-' * 40)
     print()
 
@@ -50,11 +50,14 @@ def get_player_info():
 
 
 def game_loop():
+    # TODO: give player change to rest and heal by % current health
+    # TODO: create random items that can be used in game play
+    # TODO: break some of these into discrete functions
     creatures = get_creatures()
     name = get_player_info()
 
     # name, level, health, defense, magic, wisdom
-    player_1 = Wizard(name, 20, 500, 10, 50, 10)
+    player_1 = Wizard(name, 20, 500, 1, 1, 1)
 
     while True:
 
@@ -63,17 +66,24 @@ def game_loop():
         print(f'A level {active_creature.level} {active_creature.name} '
               f'appears in the clearing...')
 
-        cmd = input('--> Do you [A]ttack, [R]un away, or [L]ook around?')
+        cmd = input('--> Do you [A]ttack, [R]un away, [L]ook around or '
+                    '[V]iew current player stats?')
         cmd = cmd.lower()
         if cmd == 'a':
-            battle(player_1, active_creature)
-            # TODO: determine results and next steps
+            battle(player_1, active_creature, creatures)
         elif cmd == 'r':
             print(f'{player_1.name} bravely runs away!')
         elif cmd == 'l':
             print(f'{player_1.name} looks around and sees: ')
             for c in creatures:
                 print(f' * A {c.name} of level {c.level}')
+        elif cmd == 'v':
+            print(f'NAME: {player_1.name}')
+            print(f'LEVEL: {player_1.level}')
+            print(f'HEALTH: {player_1.health}')
+            print(f'DEFENSE: {player_1.defense}')
+            print(f'MAGIC: {player_1.magic}')
+            print(f'WISDOM: {player_1.wisdom}')
         else:
             print('Exiting game...')
             break
@@ -84,28 +94,31 @@ def game_loop():
             print('-' * 45)
 
 
-def battle(player, creature):
-    # TODO: remove creature from list if defeated
+def battle(player, active_creature, creatures):
     # TODO: give player chance to run if below threshold
-    # TODO: slow down game play and provide more detail
+    # TODO: provide more detail in game play
+    # TODO: increase player level based on winning
 
-    while player.health >= player.health * .3:
+    while player.health >= 0 and active_creature.health >= 0:
+        time.sleep(2)
         hero_attack = player.attack()
-        creature_defense = creature.defensive_roll()
+        creature_defense = active_creature.defensive_roll()
         if hero_attack >= creature_defense:
             print(f'You have inflicted {hero_attack} point of damage '
-                  f'on the {creature.name}!')
-            creature.health -= hero_attack
-            if creature.health <= 0:
-                print(f'You have killed the {creature.name}!')
+                  f'on the {active_creature.name}!')
+            active_creature.health -= hero_attack
+            if active_creature.health <= 0:
+                creatures.remove(active_creature)
+                print(f'You have killed the {active_creature.name}!')
                 break
         else:
-            print(f'The {creature.name} has dodged your attack...')
+            print(f'The {active_creature.name} has dodged your attack...')
 
-        creature_attack = creature.attack()
+        time.sleep(2)
+        creature_attack = active_creature.attack()
         player_defense = player.defensive_roll()
         if creature_attack >= player_defense:
-            print(f'The {creature.name} has hit you with {creature_attack}'
+            print(f'The {active_creature.name} has hit you with {creature_attack}'
                   f' points of damage!')
             player.health -= creature_attack
             if player.health <= 0:
