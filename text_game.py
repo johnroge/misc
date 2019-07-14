@@ -10,11 +10,14 @@ from game_characters import Wizard, Creature, LargeCreature,\
 import random
 import time
 import os
+# TODO: create random items that can be used in game play
 
 
 def main():
     print_header()
-    game_loop()
+    player = get_player_info()
+    creatures = get_creatures()
+    game_loop(player, creatures)
 
 
 def print_header():
@@ -59,20 +62,16 @@ def get_player_info():
     return player
 
 
-def game_loop():
-    # TODO: give player chance to rest and heal by % current health
-    # TODO: create random items that can be used in game play
-    creatures = get_creatures()
-    player = get_player_info()
+def game_loop(player, creatures):
 
     while True:
 
+        cmd = user_action()
         active_creature = random.choice(creatures)
+
         print()
         print(f'A level {active_creature.level} {active_creature.name} '
               f'appears in the clearing...')
-
-        cmd = user_action()
 
         if cmd == 'a':
             battle_loop(player, active_creature, creatures)
@@ -90,6 +89,7 @@ def game_loop():
 
 
 def user_action():
+    # TODO: give player chance to rest and heal by % current health
     # TODO: add feature for loading and saving game
     cmd = input('--> Do you [A]ttack, [R]un away, [L]ook around or '
                 '[V]iew current player stats?\n ---> Press any '
