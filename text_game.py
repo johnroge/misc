@@ -101,54 +101,66 @@ def battle_loop(player, active_creature, creatures):
     # TODO: give player chance to run if below threshold
     # TODO: provide more detail in game play
     # TODO: increase player level based on winning
-    # TODO: break some of this into smaller functions if possible
 
     while player.health >= 0 and active_creature.health >= 0:
-        # player attacks creature
-        hero_attack = player.attack_roll()
-        creature_defense = active_creature.defensive_roll()
-        if hero_attack >= creature_defense:
-            print(f'{player.name} attacks the {active_creature.name}!')
-            time.sleep(2)
-            print(f'You have inflicted {hero_attack} points of damage '
-                  f'on the {active_creature.name}!')
-            active_creature.health -= hero_attack
-            if active_creature.health <= 0:
-                creatures.remove(active_creature)
-                print(f'You have killed the {active_creature.name}!')
-                time.sleep(4)
-                os.system('cls' if os.name == 'nt' else 'clear')
-                break
+        player_attack(player, active_creature)
+        if active_creature.health <= 0:
+            creatures.remove(active_creature)
+            print(f'The {active_creature.name} has released its mortal coil.')
         else:
-            print(f'The {active_creature.name} has dodged your attack...')
+            creature_attack(active_creature, player)
 
-        # creature attacks player
-        time.sleep(2)
-        creature_attack = active_creature.attack_roll()
-        player_defense = player.defensive_roll()
-        print(f'{active_creature.name} fights back!')
-        time.sleep(1)
-        if creature_attack >= player_defense:
-            print(f'The {active_creature.name} has hit you with {creature_attack}'
-                  f' points of damage!')
-            player.health -= creature_attack
-            if player.health <= 0:
-                print(f'Our hero {player.name} has been mortally wounded; '
-                      f' will he be able to survive to fight another day?')
-                player.health = 1
-                time.sleep(4)
-                os.system('cls' if os.name == 'nt' else 'clear')
-                break
+        # TODO: end game if health below 0
+        if player.health <= 0:
+            print(f'{player.name} has been killed in battle.')
+            print('-' * 45)
+            print('       GAME OVER')
+            print('-' * 45)
+            time.sleep(6)
+            raise SystemExit
+        elif player.health <= 30:
+            print(f'{player.name} has been critically wounded, but manages '
+                  f'to escape with his life.')
+            time.sleep(5)
+            break
         else:
-            print(f'{player.name} has dodged the attack!')
+            pass
 
 
 def player_attack(player, active_creature):
-    pass
+    player_roll = player.attack_roll()
+    creature_roll = active_creature.defensive_roll()
+    print(f'Our hero has attacked the {active_creature.name}!')
+    time.sleep(1)
+    print(f'{player.name} rolls a {player_roll}, while the'
+          f' {active_creature.name} rolls a {creature_roll} in defense...')
+    time.sleep(1)
+
+    if player_roll >= creature_roll:
+        print(f'The creature sustains {player_roll} points of damage!')
+        active_creature.health -= player_roll
+    else:
+        print(f'The wiley {active_creature.name} has dodged our attack...')
+
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def creature_attack(active_creature, player):
-    pass
+    creature_roll = active_creature.attack_roll()
+    player_roll = player.defensive_roll()
+    print(f'The {active_creature.name} fights back!')
+    time.sleep(1)
+    print(f'The {active_creature.name} has rolled a {creature_roll}, '
+          f'while our hero {player.name} rolls a {player_roll}!')
+    time.sleep(1)
+
+    if creature_roll >= player_roll:
+        print(f'{player.name} has taken {creature_roll} points of damage!')
+        player.health -= creature_roll
+    else:
+        print(f'Our hero {player.name} manages to parry the attack...')
+
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 if __name__ == '__main__':
