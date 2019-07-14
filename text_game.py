@@ -85,11 +85,36 @@ def game_loop():
 
 
 def battle(player, creature):
-    # player attacks creature, misses if defensive roll is higher
-    # creature attacks player, misses if defensive roll is higher
-    # if hit then subtract damage from health
-    # remove creature from game if out of health
-    # give player chance to run away if health below 30%
+    # TODO: remove creature from list if defeated
+    # TODO: give player chance to run if below threshold
+    # TODO: slow down game play and provide more detail
+
+    while player.health >= player.health * .3:
+        hero_attack = player.attack()
+        creature_defense = creature.defensive_roll()
+        if hero_attack >= creature_defense:
+            print(f'You have inflicted {hero_attack} point of damage '
+                  f'on the {creature.name}!')
+            creature.health -= hero_attack
+            if creature.health <= 0:
+                print(f'You have killed the {creature.name}!')
+                break
+        else:
+            print(f'The {creature.name} has dodged your attack...')
+
+        creature_attack = creature.attack()
+        player_defense = player.defensive_roll()
+        if creature_attack >= player_defense:
+            print(f'The {creature.name} has hit you with {creature_attack}'
+                  f' points of damage!')
+            player.health -= creature_attack
+            if player.health <= 0:
+                print(f'Our hero {player.name} has been mortally wounded; '
+                      f' will he be able to survive to fight another day?')
+                player.health = 1
+                break
+        else:
+            print(f'{player.name} has dodged the attack!')
 
 
 if __name__ == '__main__':
