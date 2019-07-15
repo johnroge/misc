@@ -1,11 +1,14 @@
 # character classes for text_game.py
 import random
-
-
 # TODO: create some decorators
 # TODO: add some magic methods
 # TODO: create new methods
+
+
 class Creature:
+    """
+    Base level class that applies to all characters
+    """
     def __init__(self, name, level, health, defense):
         self.name = name
         self.level = level
@@ -27,6 +30,9 @@ class Creature:
 
 
 class LargeCreature(Creature):
+    """
+    Large, NPC character class
+    """
     def __init__(self, name, level, health, defense, armor):
         super().__init__(name, level, health, defense)
         self.armor = armor
@@ -38,6 +44,9 @@ class LargeCreature(Creature):
 
 
 class MagicalCreature(Creature):
+    """
+    NPC magical class of characters
+    """
     def __init__(self, name, level, health, defense, magic):
         super().__init__(name, level, health, defense)
         self.magic = magic
@@ -49,6 +58,9 @@ class MagicalCreature(Creature):
 
 
 class Wizard(MagicalCreature):
+    """
+    Currently only available to game player
+    """
     def __init__(self, name, level, health, defense, magic, wisdom):
         super().__init__(name, level, health, defense, magic)
         self.wisdom = wisdom

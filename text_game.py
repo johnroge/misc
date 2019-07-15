@@ -11,6 +11,7 @@ import random
 import time
 import os
 # TODO: create random items that can be used in game play
+# TODO: create decorator for sanitizing input
 
 
 def main():
@@ -123,6 +124,7 @@ def user_action():
     Current menu for player choices
     :return: cmd
     """
+    # TODO: create real menu
     # TODO: give player chance to rest and heal by % current health
     # TODO: add feature for loading and saving game
     cmd = input('--> Do you [A]ttack, [R]un away, [L]ook around or '
