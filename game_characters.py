@@ -1,6 +1,6 @@
 # character classes for text_game.py
 import random
-# TODO: create some decorators
+# TODO: create some decorators, start with @property
 # TODO: add some magic methods
 # TODO: create new methods
 
@@ -41,6 +41,21 @@ class LargeCreature(Creature):
         base_roll = super().defensive_roll()
         modifier = self.armor
         return base_roll + modifier
+
+
+class Dragon(LargeCreature):
+    """
+    Special class for dragons - may or may not breath fire
+    """
+    def __init__(self, name, level, health, defense, armor, fire):
+        super().__init__(name, level, health, defense, armor)
+        self.fire = fire
+
+    def attack_roll(self):
+        base_attack = super().attack_roll()
+        fire_modifier = 20 if self.fire else 0
+
+        return base_attack + fire_modifier
 
 
 class MagicalCreature(Creature):

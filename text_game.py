@@ -6,12 +6,17 @@ v2.0
 """
 
 from game_characters import Wizard, Creature, LargeCreature,\
-    MagicalCreature
+    MagicalCreature, Dragon
 import random
 import time
 import os
 # TODO: create random items that can be used in game play
 # TODO: create decorator for sanitizing input
+# TODO: use recursion
+# TODO: use lambda function
+# TODO: use list comp
+# TODO: use generator
+# TODO: use *args and *kwargs
 
 
 def main():
@@ -67,7 +72,9 @@ def get_creatures():
         MagicalCreature('dark elf', 15, 90, 15, 10),
         # name, level, health, defense, armor
         LargeCreature('orc', 10, 100, 12, 10),
-        LargeCreature('dragon', 20, 500, 50, 50),
+        # name, level, health, defense, armor, fire
+        Dragon('Red Dragon', 20, 800, 20, 20, True),
+        Dragon('Black Dragon', 15, 600, 15, 15, False)
     ]
 
     return creatures
