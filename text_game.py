@@ -26,8 +26,23 @@ def main():
     """
     print_header()
     player = get_player_info()
-    creatures = get_creatures()
+    creature_count = number_creatures()
+    creatures = get_creatures(creature_count)
     game_loop(player, creatures)
+
+
+def number_creatures():
+    """
+    Let player choose number of creatures to battle
+    :return: Integer
+    """
+    while True:
+        choice = input('Please enter a number between 5 and 100: ')
+        choice = int(choice)
+        if 5 <= choice <= 100:
+            return choice
+        else:
+            print('Please enter a number between 5 and 100.')
 
 
 def current_monster(creature):
@@ -53,29 +68,46 @@ def print_header():
     print('                                   v2.0')
     print('-' * 40)
     print()
+    time.sleep(2)
 
 
-def get_creatures():
+def get_creatures(number):
     """
     Generate master list of available creatures to hunt
     :return: List of creature instances
     """
-    # TODO: create a randomized set of creatures based on probability
+
     # TODO: randomize the creature stats within a certain range
-    creatures = [
+    creature_menu = [
         # name, level, health, defense
-        Creature('wolf', 5, 50, 5),
-        Creature('poisonous snake', 3, 5, 2),
-        Creature('elk', 5, 60, 5),
+        Creature('dire wolf', 5, 50, 5),
+        Creature('giant spider', 2, 15, 5),
+        Creature('poisonous snake', 1, 5, 2),
+        Creature('black bear', 8, 90, 9),
         # name, level, health, defense, magic
-        MagicalCreature('goblin', 10, 70, 9, 8),
-        MagicalCreature('dark elf', 15, 90, 15, 10),
+        MagicalCreature('goblin', 9, 50, 9, 8),
+        MagicalCreature('dark elf', 10, 90, 15, 16),
+        MagicalCreature('beholder', 11, 40, 10, 14),
+        MagicalCreature('mind flayer', 12, 40, 8, 20),
+        MagicalCreature('golem', 13, 90, 20, 9),
+        MagicalCreature('lich', 9, 40, 8, 10),
+        MagicalCreature('skeleton', 8, 30, 5, 10),
+        MagicalCreature('zombie', 10, 60, 2, 8),
+        MagicalCreature('air elemental', 8, 30, 35, 10),
+        MagicalCreature('death knight', 15, 100, 20, 20),
         # name, level, health, defense, armor
-        LargeCreature('orc', 10, 100, 12, 10),
+        LargeCreature('frost giant', 15, 90, 15, 10),
+        LargeCreature('orc', 12, 100, 12, 10),
+        LargeCreature('troll', 14, 90, 15, 10),
         # name, level, health, defense, armor, fire
         Dragon('Red Dragon', 20, 800, 20, 20, True),
         Dragon('Black Dragon', 15, 600, 15, 15, False)
     ]
+
+    creatures = []
+    while number >= 1:
+        creatures.append(random.choice(creature_menu))
+        number -= 1
 
     return creatures
 
@@ -90,11 +122,11 @@ def get_player_info():
     name = input('What is your name, hero? ')
     name = name.capitalize()
     player = Wizard(name,
-                    20,  # level
-                    300, # health
-                    5,   # defense
-                    5,   # magic
-                    5)   # wisdom
+                    20,   # level
+                    300,  # health
+                    5,    # defense
+                    5,    # magic
+                    5)    # wisdom
 
     return player
 
@@ -238,13 +270,15 @@ def player_attack(player, active_creature):
     time.sleep(1)
     print(f'{player.name} rolls a {player_roll}, while the'
           f' {active_creature.name} rolls a {creature_roll} in defense...')
-    time.sleep(1)
+    time.sleep(2)
 
     if player_roll >= creature_roll:
         print(f'The creature sustains {player_roll} points of damage!')
         active_creature.health -= player_roll
+        time.sleep(2)
     else:
         print(f'The wiley {active_creature.name} has dodged our attack...')
+        time.sleep(2)
 
     clear_screen()
 
@@ -262,13 +296,15 @@ def creature_attack(active_creature, player):
     time.sleep(1)
     print(f'The {active_creature.name} has rolled a {creature_roll}, '
           f'while our hero {player.name} rolls a {player_roll}!')
-    time.sleep(1)
+    time.sleep(2)
 
     if creature_roll >= player_roll:
         print(f'{player.name} has taken {creature_roll} points of damage!')
         player.health -= creature_roll
+        time.sleep(2)
     else:
         print(f'Our hero {player.name} manages to parry the attack...')
+        time.sleep(2)
 
     clear_screen()
 

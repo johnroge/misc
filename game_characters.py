@@ -37,6 +37,7 @@ class LargeCreature(Creature):
         super().__init__(name, level, health, defense)
         self.armor = armor
 
+    # TODO: change the way damage is taken - subtract armor
     def defensive_roll(self):
         base_roll = super().defensive_roll()
         modifier = self.armor
@@ -70,6 +71,11 @@ class MagicalCreature(Creature):
         base_attack = super().attack_roll()
         modifier = self.magic
         return base_attack + modifier
+
+# TODO: Character class - Ranger
+# TODO: Character class - Cleric
+# TODO: Character class - Barbarian
+# TODO: Character class - Fighter
 
 
 class Wizard(MagicalCreature):
