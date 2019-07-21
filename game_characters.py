@@ -9,24 +9,22 @@ class Creature:
     """
     Base level class that applies to all characters
     """
-    def __init__(self, name, level, health, defense):
+    def __init__(self, name, level, health, defense, armor):
         self.name = name
         self.level = level
         self.health = health
         self.defense = defense
+        self.armor = armor
 
     def __repr__(self):
-        return "Creature {} of {} level and {} health.".format(
-            self.name,
-            self.level,
-            self.health
-        )
+        return f'A {self.name} of {self.level} level, {self.health} ' \
+            f'health, {self.defense} and {self.armor} armor.'
 
     def attack_roll(self):
-        return random.randint(1, 10) + self.level
+        return random.randint(1, 10) + round(self.level * .5)
 
     def defensive_roll(self):
-        return random.randint(1, 10) + self.defense
+        return random.randint(1, 10) + round(self.defense * .5)
 
 
 class LargeCreature(Creature):
@@ -34,16 +32,13 @@ class LargeCreature(Creature):
     Large, NPC character class
     """
     def __init__(self, name, level, health, defense, armor):
-        super().__init__(name, level, health, defense)
-        self.armor = armor
+        super().__init__(name, level, health, defense, armor)
 
-    def __repr__(self):
-        return 'Large'
+    def attack_roll(self):
+        return random.randint(1, 10) + self.level
 
     def defensive_roll(self):
-        base_roll = super().defensive_roll()
-        modifier = self.armor
-        return base_roll + modifier
+        return random.randint(1, 10) + self.defense
 
 
 class Dragon(LargeCreature):
@@ -54,31 +49,30 @@ class Dragon(LargeCreature):
         super().__init__(name, level, health, defense, armor)
         self.fire = fire
 
-    def __repr__(self):
-        return 'Dragon'
-
     def attack_roll(self):
         base_attack = super().attack_roll()
         fire_modifier = 20 if self.fire else 0
-
         return base_attack + fire_modifier
+
+    def defensive_roll(self):
+        base_defense = super().defensive_roll()
+        return base_defense + random.randint(1, 20)
 
 
 class MagicalCreature(Creature):
     """
     NPC magical class of characters
     """
-    def __init__(self, name, level, health, defense, magic):
-        super().__init__(name, level, health, defense)
+    def __init__(self, name, level, health, defense, armor, magic):
+        super().__init__(name, level, health, defense, armor)
         self.magic = magic
 
-    def __repr__(self):
-        return 'Magical'
-
     def attack_roll(self):
-        base_attack = super().attack_roll()
-        modifier = self.magic
-        return base_attack + modifier
+        return random.randint(1, 10) + self.magic
+
+    def defensive_roll(self):
+        return random.randint(1, 10) + self.defense + round(self.magic * .5)
+
 
 # TODO: Character class - Ranger
 # TODO: Character class - Cleric
@@ -90,16 +84,16 @@ class Wizard(MagicalCreature):
     """
     Currently only available to game player
     """
-    def __init__(self, name, level, health, defense, magic,
+    def __init__(self, name, level, health, defense, armor, magic,
                  wisdom, current_health):
-        super().__init__(name, level, health, defense, magic)
+        super().__init__(name, level, health, defense, armor, magic)
         self.wisdom = wisdom
         self.current_health = current_health
 
     def __repr__(self):
         return f'{self.name} is a level {self.level} wizard with ' \
-            f'{self.current_health} health, {self.magic} magic, and' \
-            f' {self.wisdom} wisdom.'
+            f'{self.current_health} health, {self.magic} magic, ' \
+            f' {self.wisdom} wisdom and {self.armor} armor.'
 
     def attack_roll(self):
         base_attack = super().attack_roll()

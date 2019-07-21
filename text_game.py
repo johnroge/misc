@@ -82,29 +82,29 @@ def get_creatures(number):
 
     # TODO: randomize the creature stats within a certain range
     creature_menu = [
-        # name, level, health, defense
-        Creature('dire wolf', 5, 50, 5),
-        Creature('giant spider', 2, 15, 5),
-        Creature('poisonous snake', 1, 5, 2),
-        Creature('black bear', 8, 90, 9),
-        # name, level, health, defense, magic
-        MagicalCreature('goblin', 9, 50, 9, 8),
-        MagicalCreature('dark elf', 10, 90, 15, 16),
-        MagicalCreature('beholder', 11, 40, 10, 14),
-        MagicalCreature('mind flayer', 12, 40, 8, 20),
-        MagicalCreature('golem', 13, 90, 20, 9),
-        MagicalCreature('lich', 9, 40, 8, 10),
-        MagicalCreature('skeleton', 8, 30, 5, 10),
-        MagicalCreature('zombie', 10, 60, 2, 8),
-        MagicalCreature('air elemental', 8, 30, 35, 10),
-        MagicalCreature('death knight', 15, 100, 20, 20),
+        # name, level, health, defense, armor
+        Creature('dire wolf', 5, 50, 5, 1),
+        Creature('giant spider', 2, 15, 5, 1),
+        Creature('poisonous snake', 1, 5, 2, 1),
+        Creature('black bear', 8, 90, 9, 5),
+        # name, level, health, defense, armor, magic
+        MagicalCreature('goblin', 9, 50, 4, 2, 8),
+        MagicalCreature('dark elf', 10, 90, 10, 5, 16),
+        MagicalCreature('beholder', 11, 40, 10, 4, 14),
+        MagicalCreature('mind flayer', 12, 40, 8, 4, 20),
+        MagicalCreature('golem', 13, 90, 5, 10, 9),
+        MagicalCreature('lich', 9, 40, 2, 2, 10),
+        MagicalCreature('skeleton', 8, 30, 2, 3, 10),
+        MagicalCreature('zombie', 10, 60, 1, 3, 8),
+        MagicalCreature('air elemental', 8, 30, 15, 5, 10),
+        MagicalCreature('death knight', 15, 100, 20, 20, 20),
         # name, level, health, defense, armor
         LargeCreature('frost giant', 15, 90, 15, 10),
         LargeCreature('orc', 12, 100, 12, 10),
         LargeCreature('troll', 14, 90, 15, 10),
         # name, level, health, defense, armor, fire
-        Dragon('Red Dragon', 20, 800, 20, 20, True),
-        Dragon('Black Dragon', 15, 600, 15, 15, False)
+        Dragon('Red Dragon', 20, 800, 20, 40, True),
+        Dragon('Black Dragon', 15, 600, 15, 25, False)
     ]
 
     # TODO: weight the creatures so fewer dragons, more lower level
@@ -128,6 +128,7 @@ def get_player_info():
                     20,   # level
                     300,  # max health
                     5,    # defense
+                    4,    # armor
                     5,    # magic
                     5,    # wisdom
                     300)  # current health
@@ -294,8 +295,7 @@ def player_attack(player, active_creature):
     clear_screen()
     player_roll = player.attack_roll()
     creature_roll = active_creature.defensive_roll()
-    damage_modifier = armor(active_creature)
-    damage = player_roll - damage_modifier
+    damage = player_roll - active_creature.armor
 
     print(f'Our hero has attacked the {active_creature.name}!')
     time.sleep(1)
@@ -314,16 +314,6 @@ def player_attack(player, active_creature):
     clear_screen()
 
 
-# TODO: not able to get creature armor
-def armor(creature):
-    if creature.__repr__ == 'Large' or creature.__repr__ == 'Dragon':
-        damage_modifier = creature.armor
-    else:
-        damage_modifier = 0
-
-    return damage_modifier
-
-
 def creature_attack(active_creature, player):
     """
     Active creature attacking current player
@@ -333,6 +323,7 @@ def creature_attack(active_creature, player):
     """
     creature_roll = active_creature.attack_roll()
     player_roll = player.defensive_roll()
+    damage = creature_roll - player.armor
     print(f'The {active_creature.name} fights back!')
     time.sleep(1)
     print(f'The {active_creature.name} has rolled a {creature_roll}, '
@@ -340,8 +331,8 @@ def creature_attack(active_creature, player):
     time.sleep(2)
 
     if creature_roll >= player_roll:
-        print(f'{player.name} has taken {creature_roll} points of damage!')
-        player.current_health -= creature_roll
+        print(f'{player.name} has taken {damage} points of damage!')
+        player.current_health -= damage
         time.sleep(2)
     else:
         print(f'Our hero {player.name} manages to parry the attack...')
