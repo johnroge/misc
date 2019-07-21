@@ -109,3 +109,35 @@ class Wizard(MagicalCreature):
         base_roll = super().defensive_roll()
         modifier = self.wisdom
         return base_roll + modifier
+
+
+class Item:
+    """
+    Objects to be used by player
+    """
+    def __init__(self, name, cost, weight):
+        self.name = name
+        self.cost = cost
+        self.weight = weight
+
+    def __repr__(self):
+        return f'A {self.name} which costs {self.cost} gold and weighs ' \
+            f'{self.weight} pounds.'
+
+
+class Weapon(Item):
+    def __init__(self, name, cost, weight, damage):
+        super().__init__(name, cost, weight)
+        self.damage = damage
+
+
+class Armor(Item):
+    def __init__(self, name, cost, weight, defense):
+        super().__init__(name, cost, weight)
+        self.defense = defense
+
+
+class Potions(Item):
+    def __init__(self, name, cost, weight, effect):
+        super().__init__(name, cost, weight)
+        self.effect = effect
