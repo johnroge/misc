@@ -37,7 +37,9 @@ class LargeCreature(Creature):
         super().__init__(name, level, health, defense)
         self.armor = armor
 
-    # TODO: change the way damage is taken - subtract armor
+    def __repr__(self):
+        return 'Large'
+
     def defensive_roll(self):
         base_roll = super().defensive_roll()
         modifier = self.armor
@@ -51,6 +53,9 @@ class Dragon(LargeCreature):
     def __init__(self, name, level, health, defense, armor, fire):
         super().__init__(name, level, health, defense, armor)
         self.fire = fire
+
+    def __repr__(self):
+        return 'Dragon'
 
     def attack_roll(self):
         base_attack = super().attack_roll()
@@ -67,6 +72,9 @@ class MagicalCreature(Creature):
         super().__init__(name, level, health, defense)
         self.magic = magic
 
+    def __repr__(self):
+        return 'Magical'
+
     def attack_roll(self):
         base_attack = super().attack_roll()
         modifier = self.magic
@@ -82,13 +90,15 @@ class Wizard(MagicalCreature):
     """
     Currently only available to game player
     """
-    def __init__(self, name, level, health, defense, magic, wisdom):
+    def __init__(self, name, level, health, defense, magic,
+                 wisdom, current_health):
         super().__init__(name, level, health, defense, magic)
         self.wisdom = wisdom
+        self.current_health = current_health
 
     def __repr__(self):
         return f'{self.name} is a level {self.level} wizard with ' \
-            f'{self.health} health, {self.magic} magic, and' \
+            f'{self.current_health} health, {self.magic} magic, and' \
             f' {self.wisdom} wisdom.'
 
     def attack_roll(self):

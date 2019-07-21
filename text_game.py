@@ -2,7 +2,7 @@
 """
 simple text game similar to dungeons and dragons
 useful for practicing with classes, methods and flow control
-v2.0
+v2.5
 """
 
 from game_characters import Wizard, Creature, LargeCreature,\
@@ -10,6 +10,9 @@ from game_characters import Wizard, Creature, LargeCreature,\
 import random
 import time
 import os
+# TODO: **  intermittent bug exists where user input is ignored    **
+# TODO: **  and the program jumps to the next creature             **
+
 # TODO: create random items that can be used in game play
 # TODO: create decorator for sanitizing input
 # TODO: use recursion
@@ -65,7 +68,7 @@ def print_header():
     print()
     print('-' * 40)
     print('   WELCOME TO THE WIZARD GAME APP')
-    print('                                   v2.0')
+    print('                                   v2.5')
     print('-' * 40)
     print()
     time.sleep(2)
@@ -104,6 +107,7 @@ def get_creatures(number):
         Dragon('Black Dragon', 15, 600, 15, 15, False)
     ]
 
+    # TODO: weight the creatures so fewer dragons, more lower level
     creatures = []
     while number >= 1:
         creatures.append(random.choice(creature_menu))
@@ -117,16 +121,16 @@ def get_player_info():
     Get user input for new player
     :return: return an instance of Wizard as player
     """
-    # TODO: Need to randomize some of these characteristics or provide
-    # TODO: more options to the user, maybe other character classes
+    # TODO: Let player choose character class and roll for starting stats
     name = input('What is your name, hero? ')
     name = name.capitalize()
     player = Wizard(name,
                     20,   # level
-                    300,  # health
+                    300,  # max health
                     5,    # defense
                     5,    # magic
-                    5)    # wisdom
+                    5,    # wisdom
+                    300)  # current health
 
     return player
 
@@ -149,6 +153,8 @@ def game_loop(player, creatures):
             print(f'{player.name} bravely runs away!')
         elif cmd == 'l':
             look_around(player, creatures)
+        elif cmd == 'h':
+            rest(player)
         elif cmd == 'v':
             print(player.__repr__())
         else:
@@ -158,15 +164,37 @@ def game_loop(player, creatures):
             game_won()
 
 
+def rest(player):
+    """
+    Give player chance to regain health by resting.
+    :param player: current active player
+    :return: N/A
+    """
+    clear_screen()
+    print('Our hero finds a place to rest and restore his health...')
+    time.sleep(10)
+
+    health_gain = round(player.current_health * .10)
+    if player.current_health + health_gain <= player.health:
+        player.current_health += health_gain
+    else:
+        player.current_health = player.health
+
+    print(f'{player.name} has regained {health_gain} points of '
+          f'health by resting...')
+    time.sleep(3)
+    print(player.__repr__())
+
+
 def user_action():
     """
     Current menu for player choices
     :return: cmd
     """
-    # TODO: create real menu
+    # TODO: create sub-menu for other actions?
     # TODO: give player chance to rest and heal by % current health
     # TODO: add feature for loading and saving game
-    cmd = input('--> Do you [A]ttack, [R]un away, [L]ook around or '
+    cmd = input('--> Do you [A]ttack, [H]eal, [R]un away, [L]ook around or '
                 '[V]iew current player stats?\n ---> Press any '
                 'other key to exit game to console: ')
     cmd = cmd.lower()
@@ -191,8 +219,8 @@ def battle_loop(player, active_creature, creatures):
     :return: None
     """
 
-    win_bonus = round(active_creature.level * .5)
-    while player.health >= 0 and active_creature.health >= 0:
+    win_bonus = round(active_creature.level * .2)
+    while player.current_health >= 0 and active_creature.health >= 0:
         player_attack(player, active_creature)
         if active_creature.health <= 0:
             creatures.remove(active_creature)
@@ -200,7 +228,7 @@ def battle_loop(player, active_creature, creatures):
         else:
             creature_attack(active_creature, player)
 
-        if player.health <= 0:
+        if player.current_health <= 0:
             os.system('cls' if os.name == 'nt' else 'clear')
             time.sleep(2)
             print(f'{player.name} has heroically died in battle...')
@@ -211,7 +239,7 @@ def battle_loop(player, active_creature, creatures):
             print('-' * 45)
             time.sleep(6)
             game_exit()
-        elif player.health <= 30:
+        elif player.current_health <= round(player.health * .20):
             print(f'{player.name} has been critically wounded, but manages '
                   f'to escape with his life.')
             time.sleep(5)
@@ -266,6 +294,9 @@ def player_attack(player, active_creature):
     clear_screen()
     player_roll = player.attack_roll()
     creature_roll = active_creature.defensive_roll()
+    damage_modifier = armor(active_creature)
+    damage = player_roll - damage_modifier
+
     print(f'Our hero has attacked the {active_creature.name}!')
     time.sleep(1)
     print(f'{player.name} rolls a {player_roll}, while the'
@@ -273,14 +304,24 @@ def player_attack(player, active_creature):
     time.sleep(2)
 
     if player_roll >= creature_roll:
-        print(f'The creature sustains {player_roll} points of damage!')
-        active_creature.health -= player_roll
+        print(f'The creature sustains {damage} points of damage!')
+        active_creature.health -= damage
         time.sleep(2)
     else:
         print(f'The wiley {active_creature.name} has dodged our attack...')
         time.sleep(2)
 
     clear_screen()
+
+
+# TODO: not able to get creature armor
+def armor(creature):
+    if creature.__repr__ == 'Large' or creature.__repr__ == 'Dragon':
+        damage_modifier = creature.armor
+    else:
+        damage_modifier = 0
+
+    return damage_modifier
 
 
 def creature_attack(active_creature, player):
@@ -300,7 +341,7 @@ def creature_attack(active_creature, player):
 
     if creature_roll >= player_roll:
         print(f'{player.name} has taken {creature_roll} points of damage!')
-        player.health -= creature_roll
+        player.current_health -= creature_roll
         time.sleep(2)
     else:
         print(f'Our hero {player.name} manages to parry the attack...')
