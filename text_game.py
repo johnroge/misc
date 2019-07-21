@@ -2,7 +2,7 @@
 """
 simple text game similar to dungeons and dragons
 useful for practicing with classes, methods and flow control
-v2.5
+v2.6
 """
 
 from game_characters import Wizard, Creature, LargeCreature,\
@@ -48,7 +48,7 @@ def number_creatures():
             print('Please enter a number between 5 and 100.')
 
 
-def current_monster(creature):
+def display_monster(creature):
     """
     Info regarding current active creature faced by player
     :param creature: active creature
@@ -68,7 +68,7 @@ def print_header():
     print()
     print('-' * 40)
     print('   WELCOME TO THE WIZARD GAME APP')
-    print('                                   v2.5')
+    print('                                   v2.6')
     print('-' * 40)
     print()
     time.sleep(2)
@@ -125,12 +125,12 @@ def get_player_info():
     name = input('What is your name, hero? ')
     name = name.capitalize()
     player = Wizard(name,
-                    20,   # level
+                    15,   # level
                     300,  # max health
                     5,    # defense
-                    4,    # armor
-                    5,    # magic
-                    5,    # wisdom
+                    6,    # armor
+                    10,    # magic
+                    8,    # wisdom
                     300)  # current health
 
     return player
@@ -145,7 +145,7 @@ def game_loop(player, creatures):
     """
     while True:
         active_creature = random.choice(creatures)
-        current_monster(active_creature)
+        display_monster(active_creature)
         cmd = user_action()
 
         if cmd == 'a':
@@ -158,8 +158,10 @@ def game_loop(player, creatures):
             rest(player)
         elif cmd == 'v':
             print(player.__repr__())
-        else:
+        elif cmd == 'x':
             game_exit()
+        else:
+            print('Please enter a, r, l, h, v or x to continue: ')
 
         if not creatures:
             game_won()
@@ -193,11 +195,9 @@ def user_action():
     :return: cmd
     """
     # TODO: create sub-menu for other actions?
-    # TODO: give player chance to rest and heal by % current health
     # TODO: add feature for loading and saving game
-    cmd = input('--> Do you [A]ttack, [H]eal, [R]un away, [L]ook around or '
-                '[V]iew current player stats?\n ---> Press any '
-                'other key to exit game to console: ')
+    cmd = input('--> Do you [A]ttack, [H]eal, [R]un away, [L]ook around, '
+                '[V]iew current stats or e[X]it game: ')
     cmd = cmd.lower()
     return cmd
 

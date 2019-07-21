@@ -21,10 +21,12 @@ class Creature:
             f'health, {self.defense} and {self.armor} armor.'
 
     def attack_roll(self):
-        return random.randint(1, 10) + round(self.level * .5)
+        modifier = round(random.randint(1, self.level) * .5)
+        return random.randint(1, 15) + modifier
 
     def defensive_roll(self):
-        return random.randint(1, 10) + round(self.defense * .5)
+        modifier = round(random.randint(1, self.defense) * .5)
+        return random.randint(1, 15) + modifier
 
 
 class LargeCreature(Creature):
@@ -35,10 +37,12 @@ class LargeCreature(Creature):
         super().__init__(name, level, health, defense, armor)
 
     def attack_roll(self):
-        return random.randint(1, 10) + self.level
+        modifier = round(random.randint(1, self.level))
+        return random.randint(1, 20) + modifier
 
     def defensive_roll(self):
-        return random.randint(1, 10) + self.defense
+        modifier = round(random.randint(1, self.defense))
+        return random.randint(1, 20) + modifier
 
 
 class Dragon(LargeCreature):
@@ -51,7 +55,7 @@ class Dragon(LargeCreature):
 
     def attack_roll(self):
         base_attack = super().attack_roll()
-        fire_modifier = 20 if self.fire else 0
+        fire_modifier = random.randint(1, 20) if self.fire else 0
         return base_attack + fire_modifier
 
     def defensive_roll(self):
@@ -68,11 +72,12 @@ class MagicalCreature(Creature):
         self.magic = magic
 
     def attack_roll(self):
-        return random.randint(1, 10) + self.magic
+        modifier = round(random.randint(1, self.magic))
+        return random.randint(1, 20) + modifier + self.level
 
     def defensive_roll(self):
-        return random.randint(1, 10) + self.defense + round(self.magic * .5)
-
+        modifier = round(random.randint(1, self.defense))
+        return random.randint(1, 20) + modifier
 
 # TODO: Character class - Ranger
 # TODO: Character class - Cleric
@@ -93,7 +98,7 @@ class Wizard(MagicalCreature):
     def __repr__(self):
         return f'{self.name} is a level {self.level} wizard with ' \
             f'{self.current_health} health, {self.magic} magic, ' \
-            f' {self.wisdom} wisdom and {self.armor} armor.'
+            f'{self.wisdom} wisdom and {self.armor} armor.'
 
     def attack_roll(self):
         base_attack = super().attack_roll()
