@@ -141,13 +141,13 @@ class Armor(Item):
         self.defense = defense
 
 
-class Potions(Item):
+class Potion(Item):
     def __init__(self, name, cost, weight, effect):
         super().__init__(name, cost, weight)
         self.effect = effect
 
 
-class Spells:
+class Spell:
     """
     Spells to be used by the Wizard class
     """

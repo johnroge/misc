@@ -6,7 +6,7 @@ v2.6
 """
 
 from game_characters import Wizard, Creature, LargeCreature,\
-    MagicalCreature, Dragon
+    MagicalCreature, Dragon, Weapon, Armor, Potion, Spell
 import random
 import time
 import os
@@ -117,11 +117,39 @@ def get_creatures(number):
 
 
 def armor():
-    pass
+    """
+    List of possible armor types that reduce damage taken (defense)
+    :return: list of armor available
+    """
+    # name, cost, weight, defense
+    armor_types = [
+        Armor('leather armor', 1, 1, 4),
+        Armor('chain shirt', 2, 2, 5),
+        Armor('breast plate', 3, 3, 6),
+        Armor('chain mail', 4, 4, 8),
+        Armor('plate armor', 6, 7, 12),
+    ]
+
+    return armor_types
 
 
 def weapons():
-    pass
+    """
+    List of possible weapons that inflict added damage
+    :return: list of weapons availabe
+    """
+
+    # name, cost, weight, damage
+    weapon_types = [
+        Weapon('dagger', 1, 1, 5),
+        Weapon('axe', 2, 2, 8),
+        Weapon('short sword', 3, 3, 8),
+        Weapon('crossbow', 3, 3, 9),
+        Weapon('battle axe', 4, 4, 10),
+        Weapon('long sword', 5, 4, 11),
+    ]
+
+    return weapon_types
 
 
 def spells():
