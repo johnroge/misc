@@ -116,6 +116,18 @@ def get_creatures(number):
     return creatures
 
 
+def armor():
+    pass
+
+
+def weapons():
+    pass
+
+
+def spells():
+    pass
+
+
 def get_player_info():
     """
     Get user input for new player
@@ -129,9 +141,13 @@ def get_player_info():
                     300,  # max health
                     5,    # defense
                     6,    # armor
-                    10,    # magic
+                    10,   # magic
                     8,    # wisdom
-                    300)  # current health
+                    300,  # current health
+                    5,    # strength
+                    [],   # items
+                    [],   # spells
+                    )
 
     return player
 
@@ -149,7 +165,7 @@ def game_loop(player, creatures):
         cmd = user_action()
 
         if cmd == 'a':
-            battle_loop(player, active_creature, creatures)
+            attack_menu(player, active_creature, creatures)
         elif cmd == 'r':
             print(f'{player.name} bravely runs away!')
         elif cmd == 'l':
@@ -165,6 +181,17 @@ def game_loop(player, creatures):
 
         if not creatures:
             game_won()
+
+
+def attack_menu(player, active_creature, creatures):
+    """
+    Provide options for attacking - weapons or spells
+    :param player: Current player
+    :param active_creature: Current creature being attacked
+    :param creatures: List of creatures
+    :return:
+    """
+    pass
 
 
 def rest(player):
@@ -194,7 +221,6 @@ def user_action():
     Current menu for player choices
     :return: cmd
     """
-    # TODO: create sub-menu for other actions?
     # TODO: add feature for loading and saving game
     cmd = input('--> Do you [A]ttack, [H]eal, [R]un away, [L]ook around, '
                 '[V]iew current stats or e[X]it game: ')

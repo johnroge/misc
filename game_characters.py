@@ -90,15 +90,19 @@ class Wizard(MagicalCreature):
     Currently only available to game player
     """
     def __init__(self, name, level, health, defense, armor, magic,
-                 wisdom, current_health):
+                 wisdom, current_health, strength, items, spells):
         super().__init__(name, level, health, defense, armor, magic)
         self.wisdom = wisdom
         self.current_health = current_health
+        self.strength = strength
+        self.items = items
+        self.spells = spells
 
     def __repr__(self):
         return f'{self.name} is a level {self.level} wizard with ' \
             f'{self.current_health} health, {self.magic} magic, ' \
-            f'{self.wisdom} wisdom and {self.armor} armor.'
+            f'{self.wisdom} wisdom and {self.armor} armor.' \
+
 
     def attack_roll(self):
         base_attack = super().attack_roll()
@@ -113,7 +117,7 @@ class Wizard(MagicalCreature):
 
 class Item:
     """
-    Objects to be used by player
+    Physical objects to be used by player
     """
     def __init__(self, name, cost, weight):
         self.name = name
@@ -141,3 +145,14 @@ class Potions(Item):
     def __init__(self, name, cost, weight, effect):
         super().__init__(name, cost, weight)
         self.effect = effect
+
+
+class Spells:
+    """
+    Spells to be used by the Wizard class
+    """
+    def __init__(self, name, magic_required, effect):
+        self.name = name
+        self.magic_required = magic_required
+        self.effect = effect
+
