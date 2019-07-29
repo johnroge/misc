@@ -136,7 +136,7 @@ def armor():
 def weapons():
     """
     List of possible weapons that inflict added damage
-    :return: list of weapons availabe
+    :return: list of available weapons
     """
 
     # name, cost, weight, damage
@@ -164,6 +164,8 @@ def get_player_info():
     # TODO: Let player choose character class and roll for starting stats
     name = input('What is your name, hero? ')
     name = name.capitalize()
+    my_weapon = weapons()
+    my_armor = armor()
     player = Wizard(name,
                     15,   # level
                     300,  # max health
@@ -173,7 +175,7 @@ def get_player_info():
                     8,    # wisdom
                     300,  # current health
                     5,    # strength
-                    [],   # items
+                    [my_armor[0], my_weapon[0]],   # items
                     [],   # spells
                     )
 
@@ -219,7 +221,30 @@ def attack_menu(player, active_creature, creatures):
     :param creatures: List of creatures
     :return:
     """
-    pass
+    clear_screen()
+    type_of_attack = input('Would you like to use a [W]eapon or a [S]pell? ')
+    type_of_attack = type_of_attack.lower()
+
+    while True:
+        if type_of_attack == 'w':
+            weapon_attack(player, active_creature, creatures)
+        elif type_of_attack == 's':
+            spell_attack(player, active_creature, creatures)
+        else:
+            print('Please use either W or S.')
+
+
+def weapon_attack(player, active_creature, creatures):
+    """
+    Select and use a weapon for attack
+    :param player: current player
+    :param active_creature: current creature being attacked
+    :param creatures: list of creatures
+    :return: None
+    """
+    print('You currently have the following weapons to choose from: ')
+    for i in player.items:
+        print(i)
 
 
 def rest(player):
@@ -351,11 +376,7 @@ def player_attack(player, active_creature):
     creature_roll = active_creature.defensive_roll()
     damage = player_roll - active_creature.armor
 
-    print(f'Our hero has attacked the {active_creature.name}!')
-    time.sleep(1)
-    print(f'{player.name} rolls a {player_roll}, while the'
-          f' {active_creature.name} rolls a {creature_roll} in defense...')
-    time.sleep(2)
+    player_attack_display(player, player_roll, active_creature, creature_roll)
 
     if player_roll >= creature_roll:
         print(f'The creature sustains {damage} points of damage!')
@@ -366,6 +387,22 @@ def player_attack(player, active_creature):
         time.sleep(2)
 
     clear_screen()
+
+
+def player_attack_display(player, player_roll, active_creature, creature_roll):
+    """
+    Display results of player attack roll and creature defense roll
+    :param player: current player
+    :param player_roll: player's dice roll
+    :param active_creature: creature being attacked
+    :param creature_roll: creature's defense roll
+    :return: None
+    """
+    print(f'Our hero has attacked the {active_creature.name}!')
+    time.sleep(1)
+    print(f'{player.name} rolls a {player_roll}, while the'
+          f' {active_creature.name} rolls a {creature_roll} in defense...')
+    time.sleep(2)
 
 
 def creature_attack(active_creature, player):
