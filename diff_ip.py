@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-Shamelessly stolen from stackoverflow (at least the important bits)
+Important bits stolen from stackoverflow - sue them, not me.
+Checks file a against file b to see what is missing from file b, then
+writes results of missing lines to output file.
 Last updated: 8/14/2019
 Author: JohnR
 Version 1.0
@@ -9,20 +11,23 @@ Version 1.0
 
 def main():
     """
-    flow control
+    flow control and core logic
     :return: none - writes to an output file for missing lines
     """
     a_file = get_file_a()
     b_file = get_file_b()
     write_out = get_outfile()
+    compare_files(a_file, b_file, write_out)
 
-    with open(a_file, 'r') as file1:
-        with open(b_file, 'r') as file2:
-            difference = set(file1).difference(file2)
+
+def compare_files(file1, file2, output_file):
+    with open(file1, 'r') as file_1:
+        with open(file2, 'r') as file_2:
+            difference = set(file_1).difference(file_2)
 
     difference.discard('\n')
 
-    with open(write_out, 'w') as file_out:
+    with open(output_file, 'w') as file_out:
         for line in difference:
             file_out.write(line)
 
