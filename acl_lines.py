@@ -6,6 +6,7 @@ Last Touched: 8/20/2019
 Version .01
 """
 
+# may need to use regular expressions
 
 def main():
     """
@@ -33,9 +34,15 @@ def convert_file(file_input, file_output):
     :return: None - writes to a results file
     """
     with open(file_input, 'r') as fin, open(file_output, 'w') as fout:
-        lines = fin.readlines()
-        for line in lines:
-            line[0] =
+        line_count = 0
+        while line_count >= 1:
+            line = fin.readline()
+            acl_line = 10
+            line.replace(, acl_line)
+
+
+
+
 
 
 
