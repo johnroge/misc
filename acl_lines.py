@@ -12,7 +12,8 @@ def main():
     flow control
     :return: None - output new file with a numbered ACL list
     """
-    pass
+    infile, outfile = get_user_input()
+    convert_file(infile, outfile)
 
 
 def get_user_input():
@@ -21,14 +22,21 @@ def get_user_input():
     :return: two variables, input file and results file
     """
     input_file = input('File to convert: ')
+    output_file = input('New file to write results to: ')
+
+    return input_file, output_file
 
 
-def convert_file():
+def convert_file(file_input, file_output):
     """
     Should be able to do all conversion in one function, at least to start
     :return: None - writes to a results file
     """
-    pass
+    with open(file_input, 'r') as fin, open(file_output, 'w') as fout:
+        lines = fin.readlines()
+        for line in lines:
+            line[0] =
+
 
 
 if __name__ == '__main__':
