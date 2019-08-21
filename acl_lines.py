@@ -20,7 +20,7 @@ def get_user_input():
     Get user input for file to convert and file to write to
     :return: two variables, input file and results file
     """
-    pass
+    input_file = input('File to convert: ')
 
 
 def convert_file():
