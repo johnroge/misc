@@ -6,7 +6,6 @@ Last Touched: 8/20/2019
 Version .01
 """
 
-# may need to use regular expressions
 
 def main():
     """
@@ -34,16 +33,11 @@ def convert_file(file_input, file_output):
     :return: None - writes to a results file
     """
     with open(file_input, 'r') as fin, open(file_output, 'w') as fout:
-        line_count = 0
-        while line_count >= 1:
-            line = fin.readline()
-            acl_line = 10
-            line.replace(, acl_line)
-
-
-
-
-
+        # getting closer but need to split on something else
+        for line in fin.readlines():
+            line.split()
+            tmp_line = line[2:]
+            fout.write(tmp_line)
 
 
 if __name__ == '__main__':
