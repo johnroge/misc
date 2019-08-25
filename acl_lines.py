@@ -34,6 +34,7 @@ def convert_file(file_input, file_output):
     """
     with open(file_input, 'r') as fin, open(file_output, 'w') as fout:
         # getting closer but need to split on something else
+        # guessing: split into bytearray or similiar, check isdigit, then remove?
         for line in fin.readlines():
             line.split()
             tmp_line = line[2:]
