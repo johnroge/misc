@@ -13,7 +13,7 @@ def main():
     basic flow control, set some common variables
     :return: device info
     """
-    partition = 'Common' # not sure where or what this is used for
+    partition = 'Common'
     login, pwd, device = get_device_data()
     mgmt = ManagementRoot(login, pwd, device)
     ltm = mgmt.tm.ltm
