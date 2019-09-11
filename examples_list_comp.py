@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-list comprehensions, lambda, map, filter and reduce
+list comprehensions, lambda, map, filter
 NOTES: ord will return the ASCII code for a character
 """
 
