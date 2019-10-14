@@ -31,13 +31,16 @@ def main():
 
 def instructions():
     """
-    Provide examples
+    Provide user examples
     :return: none
     """
-    print('IPv4 address example: 10.3.4.20')
-    print('IPv6 address example: 2603:10a6:1200:: ')
-    print('\nIPv4 subnet example: 10.3.4.0/16')
-    print('IPv6 subnet example: 2603:10a6:1200::/39 ')
+    print('Examples')
+    print('*' * 60)
+    print('IPv4 address: 10.3.4.20')
+    print('IPv4 subnet: 10.3.4.0/16')
+    print('IPv6 address: 2603:10a6:1200:: ')
+    print('IPv6 subnet: 2603:10a6:1200::/39 ')
+    print('*' * 60)
 
 
 def user_menu():
@@ -62,10 +65,10 @@ def get_info():
     Get user input
     :return: IP Address and subnet info
     """
-    # TODO: validate input
     print()
     address = input('Please enter ip address: ')
     subnet = input('Please enter subnet: ')
+
     return address, subnet
 
 
