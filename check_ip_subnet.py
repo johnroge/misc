@@ -106,6 +106,11 @@ def get_ip_range(subnet):
 
 
 def validate_ip(ip_address):
+    """
+    check if it is a valid IP address
+    :param ip_address: IP provided by user input
+    :return: boolean
+    """
     try:
         IPAddress(ip_address)
         return True
@@ -114,6 +119,11 @@ def validate_ip(ip_address):
 
 
 def validate_subnet(sub):
+    """
+    check if a valid subnet has been given
+    :param sub: subnet provided by user input
+    :return: boolean
+    """
     try:
         IPNetwork(sub)
         return True
