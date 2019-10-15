@@ -3,11 +3,11 @@
 Simple script for validating an IP address is within a given subnet
 Author: JohRoge
 Last Updated: 8/7/2019
-version: 1.1
-Notes: 1.1 creating simple user menu and looking to add new features
+version: 2.0
+Notes: fixed test for checking IP/ subnet validity
 """
 
-from netaddr import IPNetwork, IPAddress
+from netaddr import IPNetwork, IPAddress, AddrFormatError
 
 
 def main():
@@ -66,10 +66,15 @@ def get_info():
     :return: IP Address and subnet info
     """
     print()
-    address = input('Please enter ip address: ')
-    subnet = input('Please enter subnet: ')
-
-    return address, subnet
+    address = input('please enter an IP: ')
+    subnet = input('please enter a subnet: ')
+    test_ip = validate_ip(address)
+    test_sub = validate_subnet(subnet)
+    if not test_ip or not test_sub:
+        print('invalid IP or subnet given')
+        main()
+    else:
+        return address, subnet
 
 
 def check_ip(address, subnet):
@@ -100,5 +105,24 @@ def get_ip_range(subnet):
           f'{ip_info.broadcast}')
 
 
+def validate_ip(ip_address):
+    try:
+        IPAddress(ip_address)
+        return True
+    except AddrFormatError:
+        return False
+
+
+def validate_subnet(sub):
+    try:
+        IPNetwork(sub)
+        return True
+    except AddrFormatError:
+        return False
+
+
 if __name__ == '__main__':
     main()
+
+
+
