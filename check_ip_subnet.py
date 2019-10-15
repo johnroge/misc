@@ -2,7 +2,7 @@
 """
 Simple script for validating an IP address is within a given subnet
 Author: JohRoge
-Last Updated: 8/7/2019
+Last Updated: 10/14/2019
 version: 2.0
 Notes: fixed test for checking IP/ subnet validity
 """
