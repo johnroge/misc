@@ -1,4 +1,4 @@
-#!/usr/bin/evn python3
+#!/usr/bin/env python3
 """
 Simple script for validating an IP address is within a given subnet
 Author: JohRoge
