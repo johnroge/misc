@@ -25,30 +25,54 @@ def main_menu():
     user main menu
     :return: variable - option selected
     """
-    # TODO: add default parameters below?
-    menu_dict = {'1': scan_folder(),
-                 '2': save_report(),
-                 '3': largest_files(),
-                 'q': exit_script()}
+    # use dict as switch to build a menu
+    switch_func_dict = {
+        1: search_logic(),
+        2: viewing_logic(),
+        3: save_logic(),
+        4: exit_script(),
+    }
 
-    main_text = '\n'.join((
-        'Choose from the following:',
-        '"1" - scan a folder,',
-        '"2" - save a Report,',
-        '"3" - see largest files',
-        '"q" to Quit: '
-      ))
-    # TODO: fix this, look for better examples
-    while True:
-        print('\nMain Menu:')
-        response = input(main_text)
-        print()
-        try:
-            if response == 'q':
-                print('exiting program.')
-                menu_dict[response]()
-        except KeyError:
-            print('\nThat selection is invalid. Please try again.')
+    print('Choose 1 - 4')
+    print('1 search a folder')
+    print('2 view results')
+    print('3 save results')
+    print('4 exit script')
+    selection = input('>>> ')
+
+
+
+def search_logic():
+    """
+    flow control for searching a directory
+    :return: n/a - shows results to screen and then exits to main_menu
+    """
+    search_directory = get_search_folder()
+    try:
+        test_folder_path(search_directory)
+    except ValueError:
+        print('not a valid path')
+        main_menu()
+
+    scan_results = scan_folder(search_directory)
+    display_largest_files(scan_results)
+    main_menu()
+
+
+def viewing_logic():
+    """
+    flow control for viewing results
+    :return: n/a - show results to screen and exit to main_menu
+    """
+    pass
+
+
+def save_logic():
+    """
+    flow control for saving offline data
+    :return: n/a, saves to file and exits back to main_menu
+    """
+    pass
 
 
 def get_search_folder():
@@ -76,7 +100,7 @@ def scan_folder(folder):
     pass
 
 
-def largest_files(database, number_entries=5):
+def display_largest_files(database, number_entries=5):
     """
     show largest files in a database, default to top 5 largest
     :param database: defaultdict
