@@ -5,9 +5,9 @@ import datetime
 
 
 def print_header():
-    print('-----------------------------------')
-    print('           Birthday App')
-    print('-----------------------------------')
+    print("-----------------------------------")
+    print("           Birthday App")
+    print("-----------------------------------")
 
 
 def get_birthday_from_user():
@@ -46,4 +46,3 @@ def main():
 
 
 main()
-

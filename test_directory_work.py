@@ -4,7 +4,7 @@ Author: JohRoge
 Last Updated: 10/14/2019
 version: .1
 Notes: test file - walk a directory, find files over a certain size,
-       use defaultdic, yield, lambda where possible
+       use defaultdict, yield, lambda where possible
        write test case for each function
        use try/except wherever possible
 """
@@ -39,7 +39,6 @@ def main_menu():
     print('3 save results')
     print('4 exit script')
     selection = input('>>> ')
-
 
 
 def search_logic():
